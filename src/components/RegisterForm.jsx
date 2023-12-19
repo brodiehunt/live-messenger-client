@@ -1,8 +1,6 @@
-import styled, {keyframes} from 'styled-components';
 import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
-import { validateRegister } from '../utils/formValidation';
 import FormStyles from './styles/Form';
 
 

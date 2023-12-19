@@ -56,7 +56,11 @@ export default function useForm(initial = {}) {
   // returns false if fails, true if passes
   function validateSubmit(formName) {
      // Runs all validation functions - returns inputErrors shaped object with new errors
-     const newInputErrors = (formName === 'register') ? validateRegister(inputs) : validateSignIn(inputs);
+     let newInputErrors;
+     if (formName === 'register') newInputErrors = validateRegister(inputs)
+     if (formName === 'signin') newInputErrors = validateSignIn(inputs)
+     if (formName === 'reset') newInputErrors = {email: validateEmail(inputs.email)}
+    
 
      // Finds and returns first key (feild name) that has an error
      const firstErrorField = Object.keys(newInputErrors).find(field => newInputErrors[field]);

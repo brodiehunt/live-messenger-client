@@ -1,40 +1,16 @@
-import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import RegisterForm from "../components/RegisterForm"
 import Logo from '../components/Logo';
 import FooterStyles from '../components/styles/Homepage/FooterStyles';
+import AuthPageStyles from '../components/styles/AuthPageStyles';
 
-
-const RegisterPageStyles = styled.div`
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 1rem;
-    color: var(--text-dark);
-  }
-  .sign-in-prompt {
-    text-align: center;
-  }
-
-  .inline-link {
-    font-weight: 600;
-    color: var(--secondary);
-  }
-  .inline-link:hover,
-  .inline-link:focus {
-    text-decoration: underline;
-  }
-`;
 
 export default function Register() {
   return (
-  <RegisterPageStyles>
+  <AuthPageStyles>
     <Logo />
     <h1>Account Registration</h1>
-    <div className="sign-in-prompt">
+    <div className="prompt">
       Already have an account? Sign in  
       <Link to="/signin" className="inline-link"> here.</Link>
     </div>
@@ -55,6 +31,6 @@ export default function Register() {
           </div>
         </div>
       </FooterStyles>
-  </RegisterPageStyles>
+  </AuthPageStyles>
   )
 }
