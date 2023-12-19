@@ -9,6 +9,7 @@ const FooterStyles = styled.footer`
   position: relative;
   color: var(--background-light);
   z-index: 3;
+  margin-top: auto;
 
   .sheild {
     position: absolute;

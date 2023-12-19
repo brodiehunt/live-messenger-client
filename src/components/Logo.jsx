@@ -1,7 +1,9 @@
 import styled from 'styled-components';
 
 const LogoStyles = styled.div`
-  margin: 3rem auto;;
+  padding-top: 3rem;
+  margin: 0 auto;
+  margin-bottom: 3rem;
   text-align: center;
   font-size: 2rem;
   line-height: 2rem;

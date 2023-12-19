@@ -37,13 +37,16 @@ export default function useForm(initial = {}) {
         return setInputErrors({...inputErrors, [name]: validateUsername(value)});
       }
       case 'email' : {
-        setInputErrors({...inputErrors, [name]: validateEmail(value)});
+        return setInputErrors({...inputErrors, [name]: validateEmail(value)});
       }
       case 'password' : {
-        setInputErrors({...inputErrors, [name]: validatePassword(value)});
+        return setInputErrors({...inputErrors, [name]: validatePassword(value)});
       }
       case 'passwordConfirm' : {
-        setInputErrors({...inputErrors, [name]: validatePasswordConfirm(value, inputs.password)});
+        return setInputErrors({...inputErrors, [name]: validatePasswordConfirm(value, inputs.password)});
+      }
+      default : {
+        return 
       }
     }
   }
@@ -70,6 +73,8 @@ export default function useForm(initial = {}) {
     fieldRefs,
     isLoading,
     serverErrors,
+    setInputErrors,
+    setIsLoading,
     handleChange,
     handleBlur,
     resetForm,
