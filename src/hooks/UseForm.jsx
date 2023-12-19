@@ -4,7 +4,9 @@ import {
   validateUsername,
   validateEmail,
   validatePassword,
-  validatePasswordConfirm
+  validatePasswordConfirm,
+  validateRegister,
+  validateSignIn
 } from '../utils/formValidation';
 
 const useFieldRefs = (fields) => {
@@ -51,6 +53,23 @@ export default function useForm(initial = {}) {
     }
   }
 
+  // returns false if fails, true if passes
+  function validateSubmit(formName) {
+     // Runs all validation functions - returns inputErrors shaped object with new errors
+     const newInputErrors = (formName === 'register') ? validateRegister(inputs) : validateSignIn(inputs);
+
+     // Finds and returns first key (feild name) that has an error
+     const firstErrorField = Object.keys(newInputErrors).find(field => newInputErrors[field]);
+ 
+     // Sets focus on first error element - sets errorState (in case submit without touching feilds)
+     if (firstErrorField && fieldRefs[firstErrorField].current) {
+       fieldRefs[firstErrorField].current.focus();
+       setInputErrors(newInputErrors);
+       return false;
+     }
+     return true;
+  }
+
   function resetForm() {
     setInputs(initial);
     setInputErrors(initial);
@@ -75,6 +94,7 @@ export default function useForm(initial = {}) {
     serverErrors,
     setInputErrors,
     setIsLoading,
+    validateSubmit,
     handleChange,
     handleBlur,
     resetForm,
