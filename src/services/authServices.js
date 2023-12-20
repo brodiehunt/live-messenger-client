@@ -14,3 +14,8 @@ export const requestReset = async (formData) => {
   const response = await api.post('/auth/request-reset', formData);
   return response;
 }
+
+export const passwordReset = async (formData) => {
+  const response = await api.post('/auth/password-reset', formData);
+  return response;
+}

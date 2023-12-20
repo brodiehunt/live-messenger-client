@@ -8,7 +8,7 @@ export default function RequestReset() {
   return (
     <AuthPageStyles>
       <Logo />
-      <h1>Reset your password</h1>
+      <h1>Request password reset</h1>
       <div className="prompt">
         Don't need to reset? Go to Sign In 
         <Link to="/signin" className="inline-link"> here.</Link>

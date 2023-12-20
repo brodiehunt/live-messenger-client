@@ -2,11 +2,16 @@ import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
 import FormStyles from './styles/Form';
-import { useState } from 'react';
-import { requestReset } from '../services/authServices';
+import { useQuery } from '../hooks/useQuery';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { passwordReset } from '../services/authServices';
 
-const ResetRequestForm = () => {
+const ResetPasswordForm = () => {
   const [successMessage, setSuccessMessage] = useState(null);
+  const [token, setToken ] = useState(null);
+  const navigate = useNavigate();
+  const query = useQuery();
   const {
     inputs,
     inputErrors,
@@ -20,18 +25,33 @@ const ResetRequestForm = () => {
     handleBlur,
     validateSubmit,
     resetForm,
-  } = useForm({ email: ''});
+  } = useForm({ password: ''});
+
+  useEffect(() => {
+    const token = query.get('token');
+
+    // if (!token) {
+    //   navigate('/request-reset');
+    // }
+    setToken(token)
+  }, [])
 
   async function handleSubmit(event) {
     event.preventDefault();
-    if (!validateSubmit('request-reset')) return null;
+    if (!validateSubmit('reset-password')) return null;
     
     setIsLoading(true);
     setServerErrors(null);
     
     try {
-      const response = await requestReset(inputs);
-      setSuccessMessage('Success! Go to your email to reset you password.')
+      console.log(token)
+      const requestInfo = {
+        ...inputs, 
+        token: token
+      }
+      console.log(requestInfo)
+      const response = await passwordReset(requestInfo);
+      setSuccessMessage(true)
       console.log(response);
     } catch(error) {
       if (error.response) {
@@ -59,21 +79,24 @@ const ResetRequestForm = () => {
         <div className="server-error">{serverErrors}</div>
       }
       {successMessage && 
-        <div className="server-success">{successMessage}</div>
+        <div className="server-success">
+          Wohoo! Password successfully reset! Sign in 
+          <Link to="/signin" className="inline-link"> here.</Link>
+        </div>
       }
       <InputField
-        type="email"
-        name="email"
-        id="email"
-        placeholder="Enter your email"
-        value={inputs.email}
-        errorMessage={inputErrors.email}
+        type="password"
+        name="password"
+        id="password"
+        placeholder="Enter your password"
+        value={inputs.password}
+        errorMessage={inputErrors.password}
         onChange={handleChange}
         onBlur={handleBlur}
-        elRef={fieldRefs.email}
+        elRef={fieldRefs.password}
         disabled={isLoading}
       >
-        Email
+        Password
       </InputField>
       <FormButton
         disabled={isLoading}
@@ -84,4 +107,4 @@ const ResetRequestForm = () => {
   )
 }
 
-export default ResetRequestForm;
+export default ResetPasswordForm;
