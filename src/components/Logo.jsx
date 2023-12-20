@@ -37,8 +37,8 @@ const Logo = () => {
 
   return (
     <LogoStyles className="logo-container">
-          <div className="circle-1"></div>
-          <div className="circle-2"></div>
+          <div aria-hidden="true" className="circle-1"></div>
+          <div aria-hidden="true" className="circle-2"></div>
           Chatter
     </LogoStyles>
   )

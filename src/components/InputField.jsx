@@ -56,7 +56,7 @@ const InputField = ({
   return (
     <InputFieldStyles>
       <label 
-        htmlFor="id"
+        htmlFor={id}
       >
         *{children}
       </label>

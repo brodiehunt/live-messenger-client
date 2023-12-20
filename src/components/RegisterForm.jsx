@@ -31,6 +31,7 @@ const RegisterForm = () => {
 
   return (
     <FormStyles 
+      role="form"
       onSubmit={handleSubmit}
       aria-busy={isLoading}
       $loading={isLoading}
