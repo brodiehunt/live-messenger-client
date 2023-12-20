@@ -7,9 +7,10 @@ import GoogleButton from 'react-google-button';
 
 export default function Signin() {
   const google = () => {
-    window.open("http://localhost:3000/auth/google", "_self");
+    const baseUrl = import.meta.env.VITE_SERVER_URL;
+    window.open(`${baseUrl}/auth/google`, "_self");
   }
-  
+
   return (
     <AuthPageStyles>
       <Logo />
@@ -21,7 +22,7 @@ export default function Signin() {
       <SignInForm />
       <div className="prompt bottom">
         Forget your password? Reset it 
-        <Link to="/reset-password" className="inline-link"> here.</Link>
+        <Link to="/request-reset" className="inline-link"> here.</Link>
       </div>
 
       <div className="google-btn-container">

@@ -19,6 +19,7 @@ const GlobalStyles = createGlobalStyle`
         --text-light: #87879d;
         --background-light: #fafafa;
         --error-red: rgba(255, 0, 0, 0.8);
+        --success-green: rgba(0, 255, 0, 0.8);
         max-width: 1440px;
         margin: 0 auto;
         

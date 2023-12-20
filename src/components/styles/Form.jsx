@@ -32,6 +32,17 @@ const FormStyles = styled.form`
     background-color: rgba(255,0 ,0 ,0.1);
   }
 
+  .server-success {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--success-green);
+    border-radius: 0.3rem;
+    background-color: rgba(0, 255, 0 ,0.1);
+  }
+
   &::before {
       height: 10px;
       margin-bottom: 2rem;

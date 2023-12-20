@@ -2,8 +2,11 @@ import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
 import FormStyles from './styles/Form';
+import { useState } from 'react';
+import { requestReset } from '../services/authServices';
 
-const ResetPasswordForm = () => {
+const ResetRequestForm = () => {
+  const [successMessage, setSuccessMessage] = useState(null);
   const {
     inputs,
     inputErrors,
@@ -12,20 +15,38 @@ const ResetPasswordForm = () => {
     isLoading,
     setIsLoading,
     serverErrors,
+    setServerErrors,
     handleChange,
     handleBlur,
     validateSubmit,
     resetForm,
   } = useForm({ email: ''});
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     if (!validateSubmit('reset')) return null;
-    console.log('handled submit');
+    
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 5000)
+    setServerErrors(null);
+    
+    try {
+      const response = await requestReset(inputs);
+      setSuccessMessage('Success! Go to your email to reset you password.')
+      console.log(response);
+    } catch(error) {
+      if (error.response) {
+        if (error.response.status === 422) {
+          setInputErrors(error.response.data.error);
+        } else {
+          setServerErrors(error.response.data.error);
+        }
+      } else if (error.request) {
+        setServerErrors(`${error.message}. Try again later`);
+      } else {
+        console.log('Some whack error i havent considered');
+      }
+    }
+    setIsLoading(false);
   }
 
   return (
@@ -35,7 +56,10 @@ const ResetPasswordForm = () => {
       $loading={isLoading}
     >
       {serverErrors && 
-        <div>Server Error</div>
+        <div className="server-error">{serverErrors}</div>
+      }
+      {successMessage && 
+        <div className="server-success">{successMessage}</div>
       }
       <InputField
         type="email"
@@ -60,4 +84,4 @@ const ResetPasswordForm = () => {
   )
 }
 
-export default ResetPasswordForm;
+export default ResetRequestForm;

@@ -3,6 +3,7 @@ import App from '../App';
 import Home from '../pages/Home';
 import Signin from '../pages/SignIn';
 import Register from '../pages/Register';
+import RequestReset from '../pages/RequestReset';
 import ResetPassword from '../pages/ResetPassword';
 import Conversations from '../pages/Conversations';
 import Conversation from '../pages/Conversation';
@@ -31,7 +32,11 @@ const Router = () => {
           element: <Register />
         },
         {
-          path: '/reset-password',
+          path: '/request-reset',
+          element: <RequestReset />
+        },
+        {
+          path: '/reset',
           element: <ResetPassword />
         },
         {

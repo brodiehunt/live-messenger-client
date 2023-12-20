@@ -1,31 +1,20 @@
 import { Link } from 'react-router-dom';
-import RegisterForm from "../components/RegisterForm"
 import Logo from '../components/Logo';
+import ResetRequestForm from '../components/ResetRequestForm';
 import FooterStyles from '../components/styles/Homepage/FooterStyles';
 import AuthPageStyles from '../components/styles/AuthPageStyles';
-import GoogleButton from 'react-google-button';
 
-export default function Register() {
-  const google = () => {
-    const baseUrl = import.meta.env.VITE_SERVER_URL;
-    window.open(`${baseUrl}/auth/google`, "_self");
-  }
-
+export default function RequestReset() {
   return (
-  <AuthPageStyles>
-    <Logo />
-    <h1>Account Registration</h1>
-    <div className="prompt">
-      Already have an account? Sign in  
-      <Link to="/signin" className="inline-link"> here.</Link>
-    </div>
-    <RegisterForm />
-    <div className="google-btn-container">
-      or
-      <GoogleButton onClick={google}/>
-    </div>
-    
-    <FooterStyles>
+    <AuthPageStyles>
+      <Logo />
+      <h1>Reset your password</h1>
+      <div className="prompt">
+        Don't need to reset? Go to Sign In 
+        <Link to="/signin" className="inline-link"> here.</Link>
+      </div>
+      <ResetRequestForm />
+      <FooterStyles>
         <div className="sheild"></div>
         <div className="background-img"></div>
         <div className="z-index">
@@ -41,6 +30,6 @@ export default function Register() {
           </div>
         </div>
       </FooterStyles>
-  </AuthPageStyles>
+    </AuthPageStyles>
   )
 }

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export default axios.create({
-  baseURL: 'http://localhost:3000',
-  timeout: 5000,
+  baseURL: import.meta.env.VITE_SERVER_URL,
+  timeout: 10000,
   withCredentials: true
 });
