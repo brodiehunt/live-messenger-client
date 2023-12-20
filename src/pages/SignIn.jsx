@@ -3,8 +3,13 @@ import Logo from '../components/Logo';
 import SignInForm from '../components/SignInForm';
 import FooterStyles from '../components/styles/Homepage/FooterStyles';
 import AuthPageStyles from '../components/styles/AuthPageStyles';
+import GoogleButton from 'react-google-button';
 
 export default function Signin() {
+  const google = () => {
+    window.open("http://localhost:3000/auth/google", "_self");
+  }
+  
   return (
     <AuthPageStyles>
       <Logo />
@@ -17,6 +22,11 @@ export default function Signin() {
       <div className="prompt bottom">
         Forget your password? Reset it 
         <Link to="/reset-password" className="inline-link"> here.</Link>
+      </div>
+
+      <div className="google-btn-container">
+        or
+        <GoogleButton onClick={google}/>
       </div>
       <FooterStyles >
         <div className="sheild"></div>

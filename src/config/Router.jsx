@@ -10,6 +10,7 @@ import NewConversation from '../pages/NewConversation';
 import Account from '../pages/Account';
 import Friends from '../pages/Friends';
 import SearchFriend from '../pages/SearchFriend';
+import AuthCallbackPage from '../pages/AuthCallbackPage';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -32,6 +33,10 @@ const Router = () => {
         {
           path: '/reset-password',
           element: <ResetPassword />
+        },
+        {
+          path: '/auth-callback',
+          element: <AuthCallbackPage />
         },
         {
           path: '/:userId',

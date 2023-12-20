@@ -1,4 +1,5 @@
 import { useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
@@ -8,6 +9,7 @@ import AppContext from '../hooks/StateContext';
 
 const SignInForm = () => {
   const { dispatch } = useContext(AppContext);
+  const navigate = useNavigate();
   const {
     inputs,
     inputErrors,
@@ -31,7 +33,13 @@ const SignInForm = () => {
     setIsLoading(true);
     try {
       const response = await signInUserLocal(inputs);
+      let user = response.data.data;
       console.log(response);
+      dispatch({
+        type: 'setUser',
+        data: user
+      });
+      return navigate(`/${user._id}/account`);
     } catch(error) {
       if (error.response) {
         if (error.response.status === 422) {

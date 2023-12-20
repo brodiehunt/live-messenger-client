@@ -1,10 +1,17 @@
+import { useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
 import FormStyles from './styles/Form';
 import { registerUserLocal } from '../services/authServices';
+import { useQuery } from '../hooks/useQuery';
+import AppContext from '../hooks/StateContext';
 
 const RegisterForm = () => {
+  const query = useQuery();
+  const { dispatch } = useContext(AppContext);
+  const navigate = useNavigate();
   const {
     inputs,
     inputErrors,
@@ -20,6 +27,15 @@ const RegisterForm = () => {
     resetForm,
   } = useForm({name: '', username: '', email: '', password: '', passwordConfirm: ''});
 
+  useEffect(() => {
+    const failedGoogleAuth = query.get('failure');
+
+    if (failedGoogleAuth) {
+      setServerErrors('Could not Authorize with google')
+    }
+
+  }, [])
+
   async function handleSubmit(event) {
     event.preventDefault()
     if (!validateSubmit('register')) return null;
@@ -27,8 +43,14 @@ const RegisterForm = () => {
     setServerErrors(null);
     try {
       const response = await registerUserLocal(inputs);
+      let user = response.data.data;
       console.log('this is the handlesubmit', response);
       setIsLoading(false);
+      dispatch({
+        type: 'setUser',
+        data: user
+      });
+      return navigate(`/${user._id}/account`);
     } catch(error) {
       if (error.response) {
         if (error.response.status === 422) {                              // inline validation errors

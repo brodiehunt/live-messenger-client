@@ -3,9 +3,13 @@ import RegisterForm from "../components/RegisterForm"
 import Logo from '../components/Logo';
 import FooterStyles from '../components/styles/Homepage/FooterStyles';
 import AuthPageStyles from '../components/styles/AuthPageStyles';
-
+import GoogleButton from 'react-google-button';
 
 export default function Register() {
+  const google = () => {
+    window.open("http://localhost:3000/auth/google", "_self");
+  }
+
   return (
   <AuthPageStyles>
     <Logo />
@@ -15,6 +19,11 @@ export default function Register() {
       <Link to="/signin" className="inline-link"> here.</Link>
     </div>
     <RegisterForm />
+    <div className="google-btn-container">
+      or
+      <GoogleButton onClick={google}/>
+    </div>
+    
     <FooterStyles>
         <div className="sheild"></div>
         <div className="background-img"></div>

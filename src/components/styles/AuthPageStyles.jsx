@@ -15,7 +15,7 @@ const AuthPageStyles = styled.div`
   }
 
   .prompt.bottom {
-    margin-bottom: 5rem;
+    margin-bottom: 3rem;
   }
 
   .inline-link {
@@ -25,6 +25,16 @@ const AuthPageStyles = styled.div`
   .inline-link:hover,
   .inline-link:focus {
     text-decoration: underline;
+  }
+
+  .google-btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 4rem;
+    gap: 1rem;
+    font-weight: 500;
   }
 `;
 
