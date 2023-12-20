@@ -2,7 +2,7 @@ import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
 import FormStyles from './styles/Form';
-
+import { registerUserLocal } from '../services/authServices';
 
 const RegisterForm = () => {
   const {
@@ -13,20 +13,37 @@ const RegisterForm = () => {
     isLoading,
     setIsLoading,
     serverErrors,
+    setServerErrors,
     handleChange,
     validateSubmit,
     handleBlur,
     resetForm,
   } = useForm({name: '', username: '', email: '', password: '', passwordConfirm: ''});
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault()
-    if (!validateSubmit('register')) return null;
+    // if (!validateSubmit('register')) return null;
     setIsLoading(true)
-    console.log('handled submit');
-    setTimeout(() => {
+    setServerErrors(null);
+    try {
+      const response = await registerUserLocal(inputs);
+      console.log('this is the handlesubmit', response);
       setIsLoading(false);
-    }, 5000)
+    } catch(error) {
+      if (error.response) {
+        if (error.response.status === 422) {                              // inline validation errors
+          setInputErrors({...inputErrors, ...error.response.data.error});
+        } else {                                                          // other server produced errors (conflict etc)
+          setServerErrors(error.response.data.error);
+        }
+      } else if (error.request) {                                        // network errors - no response from server
+        setServerErrors(`${error.message}. Try again later`);
+      } else {
+        // Something else happened (on the client ? go to error page)
+        console.log('something random', error)
+      }
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -37,7 +54,7 @@ const RegisterForm = () => {
       $loading={isLoading}
     >
       {serverErrors && 
-        <div>Server error</div>
+        <div className="server-error">{serverErrors}</div>
       }
       <InputField
         type="text"

@@ -21,6 +21,17 @@ const FormStyles = styled.form`
   /* box-shadow: 0 4px 8px 3px rgba(0, 0, 0, 0.1); */
   border-radius: 3px;
 
+  .server-error {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--error-red);
+    margin-bottom: 1rem;
+    padding: 0.5rem 0.8rem;
+    border: 1px solid var(--error-red);
+    border-radius: 0.3rem;
+    background-color: rgba(255,0 ,0 ,0.1);
+  }
+
   &::before {
       height: 10px;
       margin-bottom: 2rem;

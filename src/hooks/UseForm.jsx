@@ -96,6 +96,7 @@ export default function useForm(initial = {}) {
     fieldRefs,
     isLoading,
     serverErrors,
+    setServerErrors,
     setInputErrors,
     setIsLoading,
     validateSubmit,
