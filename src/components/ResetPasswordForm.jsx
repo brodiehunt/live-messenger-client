@@ -30,9 +30,9 @@ const ResetPasswordForm = () => {
   useEffect(() => {
     const token = query.get('token');
 
-    // if (!token) {
-    //   navigate('/request-reset');
-    // }
+    if (!token) {
+      navigate('/request-reset');
+    }
     setToken(token)
   }, [])
 

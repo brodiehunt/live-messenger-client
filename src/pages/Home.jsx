@@ -6,11 +6,10 @@ import imgGrid2 from '../assets/homepage/desktop/image-men-in-meeting.jpg';
 import imgGrid3 from '../assets/homepage/desktop/image-woman-in-videocall.jpg';
 import imgGrid4 from '../assets/homepage/desktop/image-women-videochatting.jpg';
 import Logo from '../components/Logo';
-import styled from 'styled-components';
 import HeroStyles from '../components/styles/Homepage/HeroStyles';
 import ImgGridStyles from '../components/styles/Homepage/ImgGridStyles';
-import FooterStyles from '../components/styles/Homepage/FooterStyles';
 import { Link } from 'react-router-dom';
+import Footer from '../components/Footer';
 
 
 
@@ -71,22 +70,7 @@ export default function Home() {
         </ImgGridStyles>
         
       </main>
-      <FooterStyles>
-        <div className="sheild"></div>
-        <div className="background-img"></div>
-        <div className="z-index">
-          <h2>Experience more together</h2>
-          <p className="footer-text">
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Inventore officia, adipisci 
-            atque beatae molestias quidem reprehenderit delectus deleniti, nam quis, vel a hic? 
-            Praesentium, eveniet eos. Vitae esse ducimus sapiente!
-          </p>
-          <Link to="/register" className="link-secondary">Join Now</Link>
-          <div className="social-links">
-
-          </div>
-        </div>
-      </FooterStyles>
+      <Footer />
     </div>
   )
 }

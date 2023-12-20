@@ -1,6 +1,8 @@
 import styled from "styled-components";
 
 const HeroStyles = styled.section`
+  max-width: 1440px;
+  margin: 0 auto;
   
   .img-center {
     width: 100%;

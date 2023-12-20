@@ -74,6 +74,24 @@ const FooterStyles = styled.footer`
     outline: 2px solid var(--secondary)
   }
 
+  .social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 3rem;
+    z-index: 20;
+
+    .icon {
+      cursor: pointer;
+      transition: 0.2s ease-in all;
+    }
+
+    .icon:hover {
+      scale: 1.1;
+    }
+  }
+
   @media (min-width: 768px) {
 
     .sheild {
@@ -97,7 +115,9 @@ const FooterStyles = styled.footer`
   };
 
   @media (min-width: 1024px) {
-
+    .sheild {
+      background-image: url(${footerImgDesktop})
+    }
   };
 `;
 export default FooterStyles;

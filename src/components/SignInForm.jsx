@@ -28,7 +28,7 @@ const SignInForm = () => {
   async function handleSubmit(event) {
     event.preventDefault();
     setServerErrors(null);
-    // if (!validateSubmit('signin')) return null;
+    if (!validateSubmit('signin')) return null;
     
     setIsLoading(true);
     try {

@@ -1,7 +1,8 @@
 import styled from "styled-components";
 
 const ImgGridStyles = styled.section`
-
+  max-width: 1440px;
+  margin: 0 auto;
   padding: 0 1.5rem;
   text-align: center;
   margin-bottom: 10rem;
