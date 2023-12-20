@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 const LogoStyles = styled.div`
   padding-top: 3rem;
@@ -36,11 +37,13 @@ const LogoStyles = styled.div`
 const Logo = () => {
 
   return (
-    <LogoStyles className="logo-container">
-          <div aria-hidden="true" className="circle-1"></div>
-          <div aria-hidden="true" className="circle-2"></div>
-          Chatter
-    </LogoStyles>
+    <Link to="/">
+      <LogoStyles className="logo-container">
+        <div aria-hidden="true" className="circle-1"></div>
+        <div aria-hidden="true" className="circle-2"></div>
+        Chatter
+      </LogoStyles>
+    </Link>
   )
 }
 

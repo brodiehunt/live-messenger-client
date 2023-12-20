@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
 import FormStyles from './styles/Form';
 import { signInUserLocal } from '../services/authServices';
+import AppContext from '../hooks/StateContext';
 
 const SignInForm = () => {
+  const { dispatch } = useContext(AppContext);
   const {
     inputs,
     inputErrors,

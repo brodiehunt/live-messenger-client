@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { StateProvider } from './hooks/StateContext.jsx';
 import GlobalStyles from './components/styles/Global.js';
 import './App.css'
 
@@ -8,7 +9,9 @@ function App() {
   return (
     <div>
       <GlobalStyles />
-      <Outlet />
+      <StateProvider>
+        <Outlet />
+      </StateProvider>
     </div>
   )
 }
