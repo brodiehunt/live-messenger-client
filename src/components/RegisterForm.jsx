@@ -22,7 +22,7 @@ const RegisterForm = () => {
 
   async function handleSubmit(event) {
     event.preventDefault()
-    // if (!validateSubmit('register')) return null;
+    if (!validateSubmit('register')) return null;
     setIsLoading(true)
     setServerErrors(null);
     try {

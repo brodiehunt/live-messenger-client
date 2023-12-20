@@ -2,7 +2,7 @@ import useForm from '../hooks/UseForm';
 import InputField from './InputField';
 import FormButton from './FormButton';
 import FormStyles from './styles/Form';
-import { Link } from 'react-router-dom';
+import { signInUserLocal } from '../services/authServices';
 
 const SignInForm = () => {
   const {
@@ -13,20 +13,38 @@ const SignInForm = () => {
     isLoading,
     setIsLoading,
     serverErrors,
+    setServerErrors,
     handleChange,
     handleBlur,
     validateSubmit,
     resetForm,
   } = useForm({ email: '', password: ''});
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    if (!validateSubmit('signin')) return null;
-    console.log('handled submit');
+    setServerErrors(null);
+    // if (!validateSubmit('signin')) return null;
+    
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 5000)
+    try {
+      const response = await signInUserLocal(inputs);
+      console.log(response);
+    } catch(error) {
+      if (error.response) {
+        if (error.response.status === 422) {
+          setInputErrors({...inputs, ...error.response.data.error})
+        } else if (error.response.status === 401) {
+          setServerErrors('Incorrect email or password');
+        } else {
+          setServerErrors(error.response.data.error);
+        }
+      } else if (error.request) {
+        setServerErrors(error.message)
+      } else {
+        console.log('Some whack error i havent considered', error);
+      }
+    }
+    setIsLoading(false);
   }
 
   return (
@@ -36,7 +54,7 @@ const SignInForm = () => {
       $loading={isLoading}
     >
       {serverErrors && 
-        <div>Server Error</div>
+        <div className="server-error">{serverErrors}</div>
       }
       <InputField
         type="email"
