@@ -11,6 +11,7 @@ const GlobalStyles = createGlobalStyle`
     body {
         font-family: 'Red Hat Display', sans-serif;
         font-size: 1rem;
+        color: var(--text-dark);
         --primary: #4d96a9;
         --secondary: #855fb1;
         --primary-hover: #8fe2f9;
@@ -22,6 +23,10 @@ const GlobalStyles = createGlobalStyle`
         --success-green: rgba(0, 255, 0, 0.8);
         
         
+    }
+
+    h1, h2, h3, h4 {
+        color: var(--text-dark);
     }
 
     a {

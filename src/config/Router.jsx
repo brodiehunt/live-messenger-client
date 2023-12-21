@@ -5,13 +5,13 @@ import Signin from '../pages/SignIn';
 import Register from '../pages/Register';
 import RequestReset from '../pages/RequestReset';
 import ResetPassword from '../pages/ResetPassword';
-import Conversations from '../pages/Conversations';
 import Conversation from '../pages/Conversation';
 import NewConversation from '../pages/NewConversation';
 import Account from '../pages/Account';
 import Friends from '../pages/Friends';
 import SearchFriend from '../pages/SearchFriend';
 import AuthCallbackPage from '../pages/AuthCallbackPage';
+import MainApp from '../pages/Conversations';
 
 const Router = () => {
   const router = createBrowserRouter([
@@ -45,7 +45,7 @@ const Router = () => {
         },
         {
           path: '/:userId',
-          element: <Conversations />,
+          element: <MainApp />,
           children: [
             {
               path: '/:userId/account',
