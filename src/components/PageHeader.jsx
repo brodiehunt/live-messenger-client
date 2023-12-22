@@ -10,7 +10,7 @@ const PageHeaderStyles = styled.div`
   align-items: center;
   padding: 1rem 0;
   gap: 3rem;
-  background-color: white;
+  background-color: var(--background-light);
   z-index: 10;
   
 

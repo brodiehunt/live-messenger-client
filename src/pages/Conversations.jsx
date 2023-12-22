@@ -11,7 +11,7 @@ import SearchBar from '../components/SearchBar';
 const MainWrapper = styled.div`
   max-width: 1400px;
   margin: 0 auto;
-
+  background-color: var(--background-light);
   .convs-container {
     max-width: 768px;
     min-height: 100svh;
@@ -50,21 +50,9 @@ export default function MainApp() {
   const [height, width] = useWindowSize();
   const location = useLocation();
   const pathSegments = location.pathname.split('/').filter(Boolean);
-  console.log(width);
   const isHomePage = pathSegments.length === 1;
-  console.log('is home page', isHomePage)
-  // const {store, dispatch} = useContext(AppContext);
-  // const user = store.user;
-  const user = {
-    name: 'Brodie',
-    username: 'Brodiehuntboi',
-    email: 'brodiehunt7@gmail.com',
-    avatarUrl: '/figure-this-out',
-    accountSettings: {
-      isPrivate: true,
-      allowNonFriendMessages: true,
-    }
-  }
+  const {store, dispatch} = useContext(AppContext);
+  const user = store.user;
 
   return (
     <MainWrapper className="main-app">
@@ -73,7 +61,6 @@ export default function MainApp() {
         
         isHomePage ?
         <div className="convs-container">
-          {console.log('rendering conversations')}
           <Profile user={user}/>
           <Nav user={user}/>
           <SearchBar />

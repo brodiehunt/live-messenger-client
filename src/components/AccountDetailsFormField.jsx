@@ -1,7 +1,7 @@
-import { useState, useRef } from "react"
+import { useState, useRef, useContext } from "react"
 import styled, { keyframes } from "styled-components";
 import { MdSaveAlt } from "react-icons/md";
-
+import AppContext from "../hooks/StateContext";
 const buttonHover = keyframes`
   0%, 100% {
     transform: rotate(-5deg);
@@ -54,7 +54,7 @@ const AccountDetailsFormStyles = styled.form`
 
   input:focus {
     border-bottom: 2px solid var(--primary);
-    background-color: rgba(242, 242, 242, 0.3);
+    /* background-color: rgba(242, 242, 242, 0.3); */
     outline: none;
   }
 
@@ -101,30 +101,55 @@ export default function AccountDetailsForm({
   type,
   name,
   initialValue,
-  validateFunc
+  validateFunc,
+  apiFunc
 }) {
-  const [input, setInput] = useState(initialValue);
-  const [inputError, setInputError] = useState(null);
+  const [input, setInput] = useState({[name]: initialValue});
+  const [inputError, setInputError] = useState({ [name]: ''});
   const [serverError, setServerError] = useState(null);
   const fieldRef = useRef(null);
-  
+  const {dispatch} = useContext(AppContext);
 
   function handleChange(event) {
-    setInput(event.target.value);
+    const {name, value} = event.target;
+    setInput({ [name]: value });
   }
 
   function handleBlur(event) {
-    setInputError(validateFunc(input));
+    const {name, value} = event.target;
+    setInputError({ [name]: validateFunc(value) });
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
-    const isInputError = validateFunc(input);
+    setServerError(null);
+    const isInputError = validateFunc(input[name]);
     if (isInputError) {
-      setInputError(isInputError);
+      setInputError({ [name]: isInputError });
       return fieldRef.current.focus();
     }
-    console.log('hello submit');
+
+    // Make api call with updated data
+    try {
+      const response = await apiFunc(input);
+      console.log('user' , response)
+      let updatedUser = response.data.data;
+      dispatch({
+        type: 'setUser',
+        data: updatedUser
+      })
+      console.log(updatedUser);
+    } catch(error) {
+      console.log('the error', error)
+      // return
+      if (error.response) {
+        setServerError(error.response.data.error);
+      }  else if (error.request) {  
+        setServerError(`${error.message}. Try again later`);
+      } else {
+        console.log('random unexpected error', error)
+      }
+    }
   }
 
   return (
@@ -137,11 +162,11 @@ export default function AccountDetailsForm({
           id={name}
           type={type}
           name={name}
-          value={input}
+          value={input[name]}
           onChange={handleChange}
           onBlur={handleBlur}
           ref={fieldRef}
-          className={inputError && 'error'}
+          className={inputError[name] && 'error'}
         />
         {serverError && 
           <div 
@@ -152,13 +177,13 @@ export default function AccountDetailsForm({
             {serverError}
           </div>
         }
-        {inputError && 
+        {inputError[name] && 
           <div 
             className="error-message"
             role="alert"
             aria-live="assertive"
           >
-            {inputError}
+            {inputError[name]}
           </div>
         }
       </div>
