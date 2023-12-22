@@ -21,3 +21,8 @@ export const updateSettings = async (formData) => {
   const response = await api.put('/account/settings', formData)
   return response
 }
+
+export const getAccount = async () => {
+  const response = await api.get('/account/');
+  return response;
+}

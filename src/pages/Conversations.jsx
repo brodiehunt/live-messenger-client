@@ -1,8 +1,8 @@
-import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import useWindowSize from '../hooks/UseWindowSize';
-
+import { getAccount } from '../services/accountServices';
 import Profile from '../components/Profile';
 import Nav from '../components/Nav';
 import AppContext from '../hooks/StateContext';
@@ -15,6 +15,7 @@ const MainWrapper = styled.div`
   .convs-container {
     max-width: 768px;
     min-height: 100svh;
+    background-color: white;
   }
 
   .outlet-container {
@@ -49,10 +50,43 @@ const MainWrapper = styled.div`
 export default function MainApp() {
   const [height, width] = useWindowSize();
   const location = useLocation();
+  const navigate = useNavigate();
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const isHomePage = pathSegments.length === 1;
   const {store, dispatch} = useContext(AppContext);
   const user = store.user;
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await getAccount();
+        const retrievedUser = response.data.data;
+        if (!retrievedUser) {
+          navigate('/signin');
+        }
+
+        dispatch({
+          type: 'setUser',
+          data: retrievedUser
+        })
+
+      } catch(error) {
+        if (error.response) {
+          navigate('/signin');
+        }
+        console.log(error)
+      }
+      
+    }
+
+    if (user) {
+      return
+    } 
+    
+    fetchUser();
+  }, [])
+
+  if (!user) return <div></div>
 
   return (
     <MainWrapper className="main-app">
