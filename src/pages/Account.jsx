@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import AppContext from "../hooks/StateContext";
 import PageHeader from "../components/PageHeader";
-import ProfileDetails from '../components/ProfileDetails';
-import ProfileSettings from '../components/ProfileSettings';
+import AccountDetails from '../components/AccountDetails';
+import AccountSettings from '../components/AccountSettings';
 
 export default function Account() {
   // const {store, dispatch} = useContext(AppContext);
@@ -24,8 +24,8 @@ export default function Account() {
         user={user} 
         pageTitle="Your Account"
       />
-      <ProfileDetails user={user}/>
-      <ProfileSettings />
+      <AccountDetails user={user}/>
+      <AccountSettings />
     </>
   )
 }

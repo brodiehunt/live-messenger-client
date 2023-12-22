@@ -11,7 +11,7 @@ const buttonHover = keyframes`
   }
 `;
 
-const ProfileFormStyles = styled.form`
+const AccountDetailsFormStyles = styled.form`
   display: flex;
   gap: 1rem;
   align-items: center;
@@ -88,10 +88,15 @@ const ProfileFormStyles = styled.form`
     cursor: pointer;
   }
 
+  button:focus {
+    outline: 1px solid var(--primary);  
+    box-shadow: 0px 2px 10px rgba(77, 150, 169, 0.4);    
+  }
+
 
 `
 
-export default function ProfileForm({
+export default function AccountDetailsForm({
   type,
   name,
   initialValue,
@@ -122,7 +127,7 @@ export default function ProfileForm({
   }
 
   return (
-    <ProfileFormStyles
+    <AccountDetailsFormStyles
       onSubmit={handleSubmit}
     >
       <div className="form-group">
@@ -159,6 +164,6 @@ export default function ProfileForm({
       <button type="submit">
         <MdSaveAlt className="button-icon" />
       </button>
-    </ProfileFormStyles>
+    </AccountDetailsFormStyles>
   )
 }

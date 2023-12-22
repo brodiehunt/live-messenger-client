@@ -1,39 +1,39 @@
 import styled from "styled-components";
-import ProfileForm from "./ProfileFormField";
+import AccountDetailsForm from "./AccountDetailsFormField";
 import {
   validateName, 
   validateEmail, 
   validateUsername } from '../utils/formValidation';
 
-const ProfileDetailsStyles = styled.div`
+const AccountDetailsStyles = styled.div`
   padding: 1rem;
 
   h2 {
     margin-bottom: 2rem;
   }
 `
-export default function ProfileDetails({user}) {
+export default function AccountDetails({user}) {
   return (
-    <ProfileDetailsStyles>
+    <AccountDetailsStyles>
       <h2>Profile Details</h2>
-      <ProfileForm
+      <AccountDetailsForm
         validateFunc={validateName}
         name='name'
         type="text"
         initialValue={user.name}
       />
-      <ProfileForm
+      <AccountDetailsForm
         validateFunc={validateUsername}
         name='username'
         type="text"
         initialValue={user.username}
       />
-      <ProfileForm
+      <AccountDetailsForm
         validateFunc={validateEmail}
         name='email'
         type="email"
         initialValue={user.email}
       />
-    </ProfileDetailsStyles>
+    </AccountDetailsStyles>
   )
 }

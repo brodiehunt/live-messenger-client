@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import AccountSettingsForm from "./AccountSettingsForm";
 const ProfileSettingsStyles = styled.div`
   padding: 1rem;
 
@@ -9,7 +9,7 @@ const ProfileSettingsStyles = styled.div`
 
 `;
 
-export default function ProfileSettings() {
+export default function AccountSettings() {
 
   const user = {
     name: 'Brodie',
@@ -24,7 +24,7 @@ export default function ProfileSettings() {
   return (
     <ProfileSettingsStyles>
       <h2> Account Settings </h2>
-      
+      <AccountSettingsForm user={user}/>
     </ProfileSettingsStyles>
   )
 }

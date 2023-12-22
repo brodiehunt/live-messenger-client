@@ -3,13 +3,19 @@ import styled from 'styled-components';
 import { IoIosArrowBack } from "react-icons/io";
 
 const PageHeaderStyles = styled.div`
+  position: sticky;
+  top: 0;
   display: flex;
+  width: 100%;
   align-items: center;
-  /* padding: 1rem; */
+  padding: 1rem 0;
   gap: 3rem;
+  background-color: white;
+  z-index: 10;
+  
 
   a {
-    border-right: 1px solid black;
+    /* border-right: 1px solid black; */
   }
 
   .back-arrow {

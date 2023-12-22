@@ -17,6 +17,9 @@ const MainWrapper = styled.div`
     min-height: 100svh;
   }
 
+  .outlet-container {
+    position: relative;
+  }
   @media (min-width: 768px) {
 
     display: flex;
@@ -30,6 +33,14 @@ const MainWrapper = styled.div`
     .outlet-container {
       flex-grow: 2;
       padding: 1rem;
+      padding-top: 0;
+      max-height: 100vh;
+      overflow-y: scroll;
+      scrollbar-width: none;
+    }
+
+    .outlet-container::-webkit-scrollbar {
+      display: none;
     }
   }
 `;
