@@ -1,8 +1,10 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useState, useContext } from "react";
 import ToggleSwitch from './ToggleSwitch';
 import FormButton from "./FormButton";
 import { IoIosClose } from "react-icons/io";
+import AppContext from "../hooks/StateContext";
+import { updateSettings } from "../services/accountServices";
 
 const AccountSettingsFormStyles = styled.form`
   margin-bottom: 3rem;
@@ -31,8 +33,11 @@ const AccountSettingsFormStyles = styled.form`
 
 
 export default function AccountSettingsForm() {
-  const [formState, setFormState] = useState({isPrivate: false, allowNonFriendMessages: true, readReceipts: true});
+  const {store, dispatch} = useContext(AppContext);
+  const user = store.user;
+  const [formState, setFormState] = useState({...user.accountSettings});
   const [formError, setFormError] = useState(null);
+  
 
   const handleChange = (event) => {
     const {name, checked} = event.target;
@@ -40,9 +45,26 @@ export default function AccountSettingsForm() {
     setFormState({...formState, [name]: checked})
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    console.log('Form submitted with toggle state:', formState);
+    console.log('handle submit', formState)
+    try {
+      const response = await updateSettings(formState);
+      const updatedUser = response.data.data;
+      dispatch({
+        type: 'setUser',
+        data: updatedUser
+      })
+      // Give some success message
+    } catch(error) {
+      if (error.response) {
+        setFormError(error.response.data.error);
+      } else if (response.request) {
+        setFormError(`${error.message}. Try again later`)
+      } else {
+        console.log('random app error. navigate to error page');
+      }
+    }
   };
 
   return (

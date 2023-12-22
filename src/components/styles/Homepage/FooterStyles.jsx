@@ -45,6 +45,7 @@ const FooterStyles = styled.footer`
     line-height: 2.25rem;
     margin-bottom: 1.5rem;
     z-index: 4;
+    color: var(--background-light);
   }
 
   .footer-text {

@@ -18,6 +18,6 @@ export const updateEmail = async (formData) => {
 }
 
 export const updateSettings = async (formData) => {
-  // const response = await api.put('/account/name', formData)
-  // return response
+  const response = await api.put('/account/settings', formData)
+  return response
 }
