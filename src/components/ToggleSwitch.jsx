@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 const ToggleSwitchStyles = styled.div`
   position: relative;
+  max-width: 700px;
   width: 100%;
   display: flex;
   justify-content: space-between;

@@ -18,18 +18,18 @@ const AccountDetailsFormStyles = styled.form`
   justify-content: space-between;
   margin-bottom: 2rem;
   position: relative;
-
+  max-width: 700px;
   .form-group {
     /* flex-grow: 1; */
-    max-width: 600px;
-    width: 90%;
+    /* max-width: px; */
+    width: 100%;
   };
 
   label {
     display: block;
     font-size: 0.8rem;
     font-weight: 500;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     color: var(--primary);
     text-transform: capitalize;
   }
@@ -38,11 +38,12 @@ const AccountDetailsFormStyles = styled.form`
     color: var(--text-dark);
     width: 100%;
     padding: 0.8rem;
+    padding-right: 3rem;
     font-size: 1rem;
     border: none;
     border-bottom: 1px solid rgba(135, 135, 157, 0.6);
     border-radius: 0.2rem 0.2rem 0 0;
-    /* background-color: rgba(242, 242, 242, 0.3); */
+    /* background-color: rgba(242, 242, 242, 0.5); */
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
     outline: none;
   }
@@ -73,8 +74,8 @@ const AccountDetailsFormStyles = styled.form`
     margin-bottom: 0.2rem;
     transition: 0.2s ease-in all;
     position: absolute;
-    right: 0;
-    top: 2.2rem;
+    right: 1rem;;
+    top: 2.1rem;
     .button-icon {
       width: 25px;
       height: 25px;
