@@ -2,12 +2,15 @@ import { queryAllByRole, render, screen, within} from '@testing-library/react';
 import RegisterForm from '../../components/RegisterForm';
 import { expect } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
+import { StateProvider } from '../../hooks/StateContext';
 import { BrowserRouter } from 'react-router-dom';
 
 beforeEach(() => {
   render(
     <BrowserRouter>
-      <RegisterForm />
+      <StateProvider>
+        <RegisterForm />
+      </StateProvider>
     </BrowserRouter>
   )
 })

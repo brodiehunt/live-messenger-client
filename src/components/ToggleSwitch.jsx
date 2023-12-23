@@ -80,6 +80,7 @@ const ToggleSwitch = ({
   id, 
   name, 
   children,
+  label,
   checked, 
   handleChange 
 }) => {
@@ -96,6 +97,7 @@ const ToggleSwitch = ({
           id={name}
           name={name}
           checked={checked}
+          aria-label={label}
           onChange={(event) => handleChange(event)}
           className="toggle-switch-checkbox"
         />

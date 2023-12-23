@@ -82,6 +82,7 @@ export default function AccountSettingsForm() {
         name="isPrivate"
         checked={formState.isPrivate}
         handleChange={handleChange}
+        label="Make your account private"
       >
         <h3>Account Privacy</h3>
         <p 
@@ -94,6 +95,7 @@ export default function AccountSettingsForm() {
         name="allowNonFriendMessages"
         checked={formState.allowNonFriendMessages}
         handleChange={handleChange}
+        label="Allow friend messages from anyone"
       >
         <h3>Allow messages from anyone</h3>
         <p 
@@ -107,6 +109,7 @@ export default function AccountSettingsForm() {
         name="readReceipts"
         checked={formState.readReceipts}
         handleChange={handleChange}
+        label="Send read receipts in messages"
       >
         <h3>Read receipts</h3>
         <p 
