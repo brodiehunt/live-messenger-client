@@ -1,11 +1,11 @@
 import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useForm from '../hooks/UseForm';
-import InputField from './InputField';
-import FormButton from './FormButton';
-import FormStyles from './styles/Form';
-import { signInUserLocal } from '../services/authServices';
-import AppContext from '../hooks/StateContext';
+import useForm from '../../hooks/UseForm';
+import InputField from '../InputField';
+import FormButton from '../FormButton';
+import FormStyles from '../styles/Form';
+import { signInUserLocal } from '../../services/authServices';
+import AppContext from '../../hooks/StateContext';
 
 const SignInForm = () => {
   const { dispatch } = useContext(AppContext);
@@ -63,6 +63,7 @@ const SignInForm = () => {
       onSubmit={handleSubmit}
       aria-busy={isLoading}
       $loading={isLoading}
+      role="form"
     >
       {serverErrors && 
         <div className="server-error">{serverErrors}</div>

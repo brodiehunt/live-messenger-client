@@ -2,8 +2,7 @@ import { queryAllByRole, render, screen, within} from '@testing-library/react';
 import ToggleSwitch from '../../components/ToggleSwitch';
 import { expect } from 'vitest';
 import { userEvent } from '@testing-library/user-event';
-import { StateProvider } from '../../hooks/StateContext';
-import { BrowserRouter } from 'react-router-dom';
+
 
 
 

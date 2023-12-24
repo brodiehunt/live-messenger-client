@@ -97,7 +97,13 @@ export default function MainApp() {
         <div className="convs-container">
           <Profile user={user}/>
           <Nav user={user}/>
-          <SearchBar />
+          <SearchBar 
+          handleChange={() => console.log('search convo')}
+          name="searchConversations"
+          placeholder="Search conversations"
+          value=''
+          label="Search your conversations"
+      />
           <div>conversation list</div>
         </div> 
         : <div className="outlet-container">

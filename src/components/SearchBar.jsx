@@ -4,7 +4,7 @@ const SearchBarStyles = styled.form`
 
   position: relative;
   padding: 1rem;
-  border-bottom: 1px solid var(--text-light);
+  /* border-bottom: 1px solid var(--text-light); */
   input {
     color: var(--text-dark);
     width: 100%;
@@ -33,17 +33,26 @@ const SearchBarStyles = styled.form`
 `;
 
 
-export default function SearchBar() {
+export default function SearchBar({
+  handleChange,
+  handleBlur,
+  name,
+  placeholder,
+  value,
+  label
+}) {
 
   return (
     <SearchBarStyles>
       <input
         type='text'
-        name="search"
-        id=""
-        value=""
-        placeholder="Search Conversations"
-        onChange={() => console.log('hello')}
+        name={name}
+        id={name}
+        value={value}
+        placeholder={placeholder}
+        onChange={(event) => handleChange(event.target.value)}
+        onBlur={handleBlur}
+        aria-label={label}
       />
       <IoSearch className="search-icon"/>
     </SearchBarStyles>

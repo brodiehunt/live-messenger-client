@@ -1,10 +1,10 @@
 import styled from "styled-components";
 import { useState, useContext } from "react";
 import ToggleSwitch from './ToggleSwitch';
-import FormButton from "./FormButton";
+import FormButton from "../FormButton";
 import { IoIosClose } from "react-icons/io";
-import AppContext from "../hooks/StateContext";
-import { updateSettings } from "../services/accountServices";
+import AppContext from "../../hooks/StateContext";
+import { updateSettings } from "../../services/accountServices";
 
 const AccountSettingsFormStyles = styled.form`
   margin-bottom: 3rem;

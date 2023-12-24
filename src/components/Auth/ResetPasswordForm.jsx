@@ -1,11 +1,11 @@
-import useForm from '../hooks/UseForm';
-import InputField from './InputField';
-import FormButton from './FormButton';
-import FormStyles from './styles/Form';
-import { useQuery } from '../hooks/useQuery';
+import useForm from '../../hooks/UseForm';
+import InputField from '../InputField';
+import FormButton from '../FormButton';
+import FormStyles from '../styles/Form';
+import { useQuery } from '../../hooks/useQuery';
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { passwordReset } from '../services/authServices';
+import { passwordReset } from '../../services/authServices';
 
 const ResetPasswordForm = () => {
   const [successMessage, setSuccessMessage] = useState(null);

@@ -1,8 +1,8 @@
 import { useContext } from "react";
 import AppContext from "../hooks/StateContext";
 import PageHeader from "../components/PageHeader";
-import AccountDetails from '../components/AccountDetails';
-import AccountSettings from '../components/AccountSettings';
+import AccountDetails from '../components/Account/AccountDetails';
+import AccountSettings from '../components/Account/AccountSettings';
 
 export default function Account() {
   const {store, dispatch} = useContext(AppContext);

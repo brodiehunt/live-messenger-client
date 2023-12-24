@@ -1,9 +1,9 @@
-import useForm from '../hooks/UseForm';
-import InputField from './InputField';
-import FormButton from './FormButton';
-import FormStyles from './styles/Form';
+import useForm from '../../hooks/UseForm';
+import InputField from '../InputField';
+import FormButton from '../FormButton';
+import FormStyles from '../styles/Form';
 import { useState } from 'react';
-import { requestReset } from '../services/authServices';
+import { requestReset } from '../../services/authServices';
 
 const ResetRequestForm = () => {
   const [successMessage, setSuccessMessage] = useState(null);

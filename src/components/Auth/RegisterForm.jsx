@@ -1,12 +1,12 @@
 import { useContext, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useForm from '../hooks/UseForm';
-import InputField from './InputField';
-import FormButton from './FormButton';
-import FormStyles from './styles/Form';
-import { registerUserLocal } from '../services/authServices';
-import { useQuery } from '../hooks/useQuery';
-import AppContext from '../hooks/StateContext';
+import useForm from '../../hooks/UseForm';
+import InputField from '../InputField';
+import FormButton from '../FormButton';
+import FormStyles from '../styles/Form';
+import { registerUserLocal } from '../../services/authServices';
+import { useQuery } from '../../hooks/useQuery';
+import AppContext from '../../hooks/StateContext';
 
 const RegisterForm = () => {
   const query = useQuery();

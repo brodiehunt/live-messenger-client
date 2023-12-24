@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import RegisterForm from "../components/RegisterForm"
+import RegisterForm from "../components/Auth/RegisterForm"
 import Logo from '../components/Logo';
 import AuthPageStyles from '../components/styles/AuthPageStyles';
 import GoogleButton from 'react-google-button';

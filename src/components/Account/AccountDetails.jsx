@@ -3,12 +3,12 @@ import AccountDetailsForm from "./AccountDetailsFormField";
 import {
   validateName, 
   validateEmail, 
-  validateUsername } from '../utils/formValidation';
+  validateUsername } from '../../utils/formValidation';
 import {
   updateName,
   updateUsername,
   updateEmail
-} from '../services/accountServices';
+} from '../../services/accountServices';
 
 const AccountDetailsStyles = styled.div`
   padding: 1rem;

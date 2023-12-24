@@ -1,5 +1,5 @@
 import Logo from '../components/Logo';
-import ResetPasswordForm from '../components/ResetPasswordForm';
+import ResetPasswordForm from '../components/Auth/ResetPasswordForm';
 import Footer from '../components/Footer';
 import AuthPageStyles from '../components/styles/AuthPageStyles';
 
