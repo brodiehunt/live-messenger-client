@@ -9,6 +9,11 @@ export const findUsers = async (searchVal) => {
   return response;
 }
 
+export const findFriendsByUsername = async (searchVal) => {
+  const response = await api.get(`/friendships/${searchVal}`);
+  return response.data.data;
+}
+
 export const getRecievedRequests = async () => {
   const response = await api.get('/friendships/request/recieved');
   return response.data.data;
