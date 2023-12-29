@@ -19,7 +19,10 @@ const UserResultsContainer = styled.div`
 
 `;
 
-export default function SearchFriendsInput() {
+export default function SearchFriendsInput({
+  activateToast,
+  addNewSentFriendship
+}) {
   // contain the state of the search bar here
   // contain the loading state of the search input here
   const [search, setSearch] = useState('');
@@ -81,6 +84,8 @@ export default function SearchFriendsInput() {
                 <UserSearchResult 
                   key={user._id} 
                   user={user}
+                  activateToast={activateToast}
+                  addNewSentFriendship={addNewSentFriendship}
                 />
               )
             })}

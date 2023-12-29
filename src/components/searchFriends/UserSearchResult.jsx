@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import { useContext } from 'react';
 import { BiMessageRounded } from "react-icons/bi";
 import { FaUserPlus } from "react-icons/fa";
+import { sendRequest } from "../../services/friendServices";
+import AppContext from "../../hooks/StateContext";
 
 const UserSearchResultStyles = styled.div`
   display: flex;
@@ -55,14 +58,30 @@ const UserSearchResultStyles = styled.div`
 
 `
 
-export default function UserSearchResult({user}){
+export default function UserSearchResult({
+  user, 
+  activateToast,
+  addNewSentFriendship
+}){
+  const {store} = useContext(AppContext);
+  const loggedInUser = store.user;
 
   function handleNewMessage() {
     console.log('new message');
   }
 
-  function handleAddUser() {
-    console.log('friend request sent');
+  // API call to add user
+  async function handleAddUser() {
+
+    try {
+      const newFriendship = await sendRequest(user._id);
+      console.log('new friendship', newFriendship);
+      addNewSentFriendship(newFriendship);
+      activateToast('Success', 'Your friend request was sent', 'success')
+    } catch(error) {
+      console.log('error', error)
+      activateToast('Error: could not send request', 'Try again later', 'error')
+    }
   }
 
   return (
@@ -88,3 +107,5 @@ export default function UserSearchResult({user}){
     </UserSearchResultStyles>
   )
 }
+
+// Brody9573

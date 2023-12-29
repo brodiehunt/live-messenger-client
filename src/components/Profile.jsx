@@ -33,7 +33,7 @@ export default function Profile({user}) {
   return (
     <ProfileStyles>
       <div className="user-avatar-container">
-        <img src={user?.avatarUrl ? `${user.avatarUrl}` : defaultAvatar } alt={`${user.username} avatar`}/>
+        <img src={user.avatarUrl} alt={`${user.username} avatar`}/>
       </div>
       <div className="username">Hello, {user.username}</div>
       <Link to={`/${user._id}/account`}>      

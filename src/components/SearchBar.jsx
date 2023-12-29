@@ -53,6 +53,7 @@ export default function SearchBar({
         onChange={(event) => handleChange(event.target.value)}
         onBlur={handleBlur}
         aria-label={label}
+        autoComplete="off"
       />
       <IoSearch className="search-icon"/>
     </SearchBarStyles>

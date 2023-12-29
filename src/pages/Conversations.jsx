@@ -20,6 +20,7 @@ const MainWrapper = styled.div`
 
   .outlet-container {
     position: relative;
+    min-height: 100svh;
   }
   @media (min-width: 768px) {
 
