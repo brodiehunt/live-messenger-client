@@ -1,5 +1,6 @@
-import styled from "styled-components";
-import AccountDetailsForm from "./AccountDetailsFormField";
+
+import AccountDetailsForm from "./AccountDetailsForm";
+import AccountSectionStyles from "../styles/Account/AccountSectionStyles";
 import {
   validateName, 
   validateEmail, 
@@ -10,16 +11,10 @@ import {
   updateEmail
 } from '../../services/accountServices';
 
-const AccountDetailsStyles = styled.div`
-  padding: 1rem;
 
-  h2 {
-    margin-bottom: 2rem;
-  }
-`
 export default function AccountDetails({user}) {
   return (
-    <AccountDetailsStyles>
+    <AccountSectionStyles>
       <h2>Profile Details</h2>
       <AccountDetailsForm
         validateFunc={validateName}
@@ -42,6 +37,6 @@ export default function AccountDetails({user}) {
         type="email"
         initialValue={user.email}
       />
-    </AccountDetailsStyles>
+    </AccountSectionStyles>
   )
 }

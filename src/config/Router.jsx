@@ -11,7 +11,7 @@ import Account from '../pages/Account';
 import Friends from '../pages/Friends';
 import SearchFriend from '../pages/SearchFriend';
 import AuthCallbackPage from '../pages/AuthCallbackPage';
-import MainApp from '../pages/Conversations';
+import MainApp from '../pages/MainApp';
 
 const Router = () => {
   const router = createBrowserRouter([

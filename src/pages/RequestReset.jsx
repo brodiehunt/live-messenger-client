@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Logo from '../components/Logo';
 import ResetRequestForm from '../components/Auth/ResetRequestForm';
-import AuthPageStyles from '../components/styles/AuthPageStyles';
+import AuthPageStyles from '../components/styles/Auth/AuthPageStyles';
 import Footer from '../components/Footer';
 
 export default function RequestReset() {

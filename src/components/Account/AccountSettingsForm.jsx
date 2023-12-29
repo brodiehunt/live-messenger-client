@@ -1,35 +1,10 @@
-import styled from "styled-components";
 import { useState, useContext } from "react";
+import AccountSettingsFormStyles from "../styles/Account/AccountSettingsFormStyles";
 import ToggleSwitch from './ToggleSwitch';
 import FormButton from "../FormButton";
 import { IoIosClose } from "react-icons/io";
 import AppContext from "../../hooks/StateContext";
 import { updateSettings } from "../../services/accountServices";
-
-const AccountSettingsFormStyles = styled.form`
-  margin-bottom: 3rem;
-
-  .error {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: var(--error-red);
-    margin-bottom: 1rem;
-    padding: 0.5rem 0.8rem;
-    border: 1px solid var(--error-red);
-    border-radius: 0.3rem;
-    background-color: rgba(255,0 ,0 ,0.1);
-  }
-
-  .close-error{
-    cursor: pointer;
-    width: 20px;
-    height: 20px;
-  }
-  
-`
 
 
 export default function AccountSettingsForm() {
@@ -40,14 +15,16 @@ export default function AccountSettingsForm() {
   
 
   const handleChange = (event) => {
+
     const {name, checked} = event.target;
-    console.log(event.target.checked)
     setFormState({...formState, [name]: checked})
+
   };
 
   const handleSubmit = async (event) => {
+
     event.preventDefault();
-    console.log('handle submit', formState)
+
     try {
       const response = await updateSettings(formState);
       const updatedUser = response.data.data;

@@ -1,30 +1,15 @@
 import { useState, useEffect } from 'react';
-import styled from 'styled-components';
 import SearchBar from '../SearchBar';
 import useDebounce from '../../hooks/useDebounce';
 import { findUsers } from '../../services/friendServices';
+import UserResultsContainer from '../styles/searchFriends/UserResultsContainer';
 import UserSearchResult from './UserSearchResult';
 
-const UserResultsContainer = styled.div`
-  /* padding: 1rem 0; */
-  margin: 0 1rem;
-  max-height: 400px;
-  overflow-y: scroll;
-  scrollbar-width: none;
-  background-color: white;
-  border-radius: 0.5rem;
-  &::-webkit-scrollbar {
-      display: none;
-  }
-
-`;
 
 export default function SearchFriendsInput({
   activateToast,
   addNewSentFriendship
 }) {
-  // contain the state of the search bar here
-  // contain the loading state of the search input here
   const [search, setSearch] = useState('');
   const debouncedVal = useDebounce(search);
   const [isLoading, setIsLoading] = useState(null);
@@ -58,7 +43,7 @@ export default function SearchFriendsInput({
     
   }, [debouncedVal])
 
-  function handleBlur(event) {
+  function handleBlur() {
     setTimeout(() => {
       setUsers(null);
     }, 200)

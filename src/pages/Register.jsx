@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import RegisterForm from "../components/Auth/RegisterForm"
 import Logo from '../components/Logo';
-import AuthPageStyles from '../components/styles/AuthPageStyles';
+import AuthPageStyles from '../components/styles/Auth/AuthPageStyles';
 import GoogleButton from 'react-google-button';
 import Footer from '../components/Footer';
 

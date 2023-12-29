@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import Logo from '../components/Logo';
 import SignInForm from '../components/Auth/SignInForm';
 import Footer from '../components/Footer';
-import AuthPageStyles from '../components/styles/AuthPageStyles';
+import AuthPageStyles from '../components/styles/Auth/AuthPageStyles';
 import GoogleButton from 'react-google-button';
 
 export default function Signin() {

@@ -1,7 +1,15 @@
-import styled from 'styled-components';
+import styled, {keyframes} from 'styled-components';
 import { Link } from 'react-router-dom';
-import defaultAvatar from '../assets/defaultAvatar.png';
 import { IoSettingsOutline } from "react-icons/io5";
+
+const buttonHover = keyframes`
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+`;
 
 const ProfileStyles = styled.div`
   display: flex;
@@ -9,7 +17,6 @@ const ProfileStyles = styled.div`
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  border-bottom: 1px solid var(--text-light);
 
   .username {
     margin-right: auto;
@@ -24,7 +31,25 @@ const ProfileStyles = styled.div`
     img {
       width: 100%;
       border-radius: 50%;
+      border: 2px solid var(--secondary);
     }
+  }
+
+  a:hover {
+    scale: 1.1;
+    animation: ${buttonHover} 0.3s linear 2;
+    cursor: pointer;
+
+    svg {
+      color: var(--primary-hover);
+    }
+  }
+ 
+  svg {
+    width: 25px;  
+    height: 25px;
+    color: var(--primary);
+    border-radius: 50%;
   }
 `;
 

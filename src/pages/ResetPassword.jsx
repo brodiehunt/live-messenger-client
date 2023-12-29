@@ -1,7 +1,7 @@
 import Logo from '../components/Logo';
 import ResetPasswordForm from '../components/Auth/ResetPasswordForm';
 import Footer from '../components/Footer';
-import AuthPageStyles from '../components/styles/AuthPageStyles';
+import AuthPageStyles from '../components/styles/Auth/AuthPageStyles';
 
 export default function ResetPassword() {
   return (

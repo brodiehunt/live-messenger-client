@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import useForm from '../../hooks/UseForm';
 import InputField from '../InputField';
 import FormButton from '../FormButton';
-import FormStyles from '../styles/Form';
+import FormStyles from '../styles/Auth/Form';
 import { signInUserLocal } from '../../services/authServices';
 import AppContext from '../../hooks/StateContext';
 

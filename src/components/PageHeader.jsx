@@ -8,11 +8,13 @@ const PageHeaderStyles = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  padding: 1rem 0;
-  gap: 3rem;
+  padding: 1rem 2rem;
+  gap: 1rem;
   background-color: var(--background-light);
   z-index: 10;
-  
+  background: white;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
+  margin-bottom: 1rem;
 
   a {
     /* border-right: 1px solid black; */
@@ -22,6 +24,13 @@ const PageHeaderStyles = styled.div`
     width: 30px;
     height: 30px;
     color: var(--primary);
+  }
+
+  @media (min-width: 768px) {
+    
+    a {
+      display: none;
+    }
   }
 
 `

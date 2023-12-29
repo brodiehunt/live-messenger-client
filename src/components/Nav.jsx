@@ -1,9 +1,18 @@
-import styled from 'styled-components';
-import { NavLink, Link } from 'react-router-dom';
+import styled, {keyframes} from 'styled-components';
+import { Link } from 'react-router-dom';
 import { TiMessages } from "react-icons/ti";
 import { BiMessageAdd } from "react-icons/bi";
 import { FaRegUser } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
+
+const buttonHover = keyframes`
+  0%, 100% {
+    transform: rotate(-5deg);
+  }
+  50% {
+    transform: rotate(5deg);
+  }
+`;
 
 const NavStyles = styled.nav`
   
@@ -11,68 +20,51 @@ const NavStyles = styled.nav`
   display: flex; 
   justify-content: space-around;
   align-items: center;
-  border-bottom: 1px solid var(--text-light);
+  
 
   a {
     padding: 1rem;
+
+    svg {
+      color: var(--primary);
+      height: 20px;
+      width: 20px;
+    }
   }
 
-  a.active {
-    background-color: var(--primary);
-  }
+  a:hover { 
 
-  a:hover {
-    background-color: var(--primary);
+    svg {
+      color: var(--primary-hover);
+      scale: 1.1;
+      animation: ${buttonHover} 0.3s linear 2;
+    }
   }
 `;
 
 export default function Nav({user}) {
   return (
     <NavStyles>
-         <NavLink to={`/${user._id}`}
-          className={({ isActive, isPending }) =>
-          isActive
-            ? "active"
-            : isPending
-            ? "pending"
-            : ""
-          }
+         <Link to={`/${user._id}`}
+          
          >
           <TiMessages />
-         </NavLink>
-         <NavLink to={`/${user._id}/conversation/new`}
-          className={({ isActive, isPending }) =>
-          isActive
-            ? "active"
-            : isPending
-            ? "pending"
-            : ""
-          }
+         </Link>
+         <Link to={`/${user._id}/conversation/new`}
+          
          >
          <BiMessageAdd />
-         </NavLink>
-         <NavLink to={`/${user._id}/friends`}
-          className={({ isActive, isPending }) =>
-          isActive
-            ? "active"
-            : isPending
-            ? "pending"
-            : ""
-          }
+         </Link>
+         <Link to={`/${user._id}/friends`}
+          
          >
          <FaRegUser />
-         </NavLink>
-         <NavLink to={`/${user._id}/search-friends`}
-          className={({ isActive, isPending }) =>
-          isActive
-            ? "active"
-            : isPending
-            ? "pending"
-            : ""
-          }
+         </Link>
+         <Link to={`/${user._id}/search-friends`}
+          
          >
          <FaUserPlus />
-         </NavLink>
+         </Link>
       </NavStyles>
   )
 }

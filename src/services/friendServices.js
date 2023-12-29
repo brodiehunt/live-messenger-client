@@ -30,6 +30,11 @@ export const deleteRequest = async (friendshipId) => {
   return response;
 }
 
+export const deleteFriend = async (friendId) => {
+  const response = await api.delete(`/friendships/${friendId}`);
+  return response.data.data;
+}
+
 export const acceptRequest = async (friendshipId) => {
   const response = await api.put(`/friendships/request/${friendshipId}`);
   return response;
@@ -44,5 +49,10 @@ export const getMutualFriends = async (userId) => {
   const response = await api.get('/friendships/mutualFriends', {
     params: { otherUserId: userId}
   })
+  return response.data.data;
+}
+
+export const getFriends = async () => {
+  const response = await api.get('/friendships');
   return response.data.data;
 }
