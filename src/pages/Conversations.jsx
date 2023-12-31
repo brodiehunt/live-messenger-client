@@ -26,7 +26,7 @@ export default function Conversations({user}) {
           value=''
           label="Search your conversations"
         />
-        <ConversationsList />
+        <ConversationsList user={user}/>
     </ConversationsStyles> 
   )
 }

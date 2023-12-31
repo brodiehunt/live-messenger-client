@@ -8,16 +8,18 @@ const PageHeaderStyles = styled.div`
   display: flex;
   width: 100%;
   align-items: center;
-  padding: 1rem 2rem;
-  gap: 1rem;
+  padding: 1rem 0rem;
   background-color: var(--background-light);
   z-index: 10;
   background: white;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
-  margin-bottom: 1rem;
+  border-bottom: 1px solid rgba(135, 135, 157, 0.3);
 
   a {
-    /* border-right: 1px solid black; */
+    width: 2rem;
+  }
+
+  h1 {
+    font-size: 1.5rem;
   }
 
   .back-arrow {
@@ -31,6 +33,12 @@ const PageHeaderStyles = styled.div`
     a {
       display: none;
     }
+
+    h1 {
+      font-size: 2rem;
+      margin-left: 2rem;
+    }
+
   }
 
 `

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import FormButton from '../FormButton';
+import {ButtonStyles} from '../FormButton';
 import { IoClose } from "react-icons/io5";
 
 const NewConversationInfoStyles = styled.div`
@@ -51,7 +51,9 @@ const NewConversationInfoStyles = styled.div`
 
 export default function NewConversationInfo({
   recipients,
-  deleteRecipient
+  deleteRecipient,
+  isLoading,
+  handleCreateConversation
 }) {
 
   return (
@@ -77,9 +79,12 @@ export default function NewConversationInfo({
           })
         }
       </div>
-      <FormButton >
-        Create Conversation
-      </FormButton>
+      <ButtonStyles
+        disabled={isLoading}
+        onClick={handleCreateConversation}
+      >
+        CreateConversation
+      </ButtonStyles>
     </NewConversationInfoStyles>
   )
 }
