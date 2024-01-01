@@ -16,7 +16,6 @@ export default function PeopleYouMayKnow({
       try {
         const potentialFriends = await getLikelyFriends();
         setMutualFriends(potentialFriends);
-        console.log(potentialFriends);
       } catch(error) {
         console.log('error', error);
       }

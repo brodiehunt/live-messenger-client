@@ -5,8 +5,10 @@ import ConversationsList from "../components/Conversations/ConversationsList";
 import styled from "styled-components";
 
 const ConversationsStyles = styled.div`
-    min-height: 100svh;
+    height: 100vh;
     background-color: white;
+    display: flex;
+    flex-direction: column;
 
     @media (min-width: 768px) {
       width: 375px;

@@ -5,7 +5,9 @@ const AppContext = createContext();
 
 export const StateProvider = ({children}) => {
   const initialState = {
-    user: null
+    user: null,
+    newRequests: false,
+    conversations: null,
   };
 
   const [store, dispatch] = useReducer(stateReducer, initialState);

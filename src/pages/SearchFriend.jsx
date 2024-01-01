@@ -12,6 +12,7 @@ import FriendRequests from "../components/searchFriends/FriendRequests";
 import PeopleYouMayKnow from "../components/searchFriends/PeopleYouMayKnow";
 import Toast from '../components/NotificationToast';
 import MutualFriendModal from "../components/searchFriends/MutualFriendModal";
+import { useToast } from "../hooks/useToast";
 
 export default function SearchFriend() {
   const {store, dispatch} = useContext(AppContext);
@@ -20,15 +21,15 @@ export default function SearchFriend() {
   const [sentRequests, setSentRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [mutualFriendModal, setMutualFriendModal] = useState(null);
-  const [toast, setToast] = useState({
-    active: false, 
-    title: '',
-    message: '',
-    type: ''
-  });
+  const { activateToast, ToastComponent } = useToast()
+  
+  const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   useEffect(() => {
     const getRequest = async () => {
+      await timeout(3000);
       try {
         const [recieved, sent] = await Promise.all([
           getRecievedRequests(),
@@ -42,21 +43,11 @@ export default function SearchFriend() {
       } catch(error) {
         console.log(error);
       }
+      setIsLoading(false);
     }
 
     getRequest();
   }, []);
-
-  const activateToast = (title, message, type) => {
-    console.log(title, message, type)
-    setToast({
-      title: title,
-      message: message,
-      type: type,
-      active: true
-    })
-    setTimeout(() => setToast({active: false}), 5000)
-  }
 
   const addNewSentFriendship = (newRequest) => {
     setSentRequests([...sentRequests, newRequest])
@@ -81,6 +72,7 @@ export default function SearchFriend() {
       activateToast('Request deleted', '', 'success');
     } catch(error) {
       console.log('error', error);
+      activateToast('Error', 'Could not delete request. Try later.', 'error');
     }
   }
 
@@ -99,18 +91,16 @@ export default function SearchFriend() {
       activateToast('Error', 'Could not accept friendship. Try later.', 'error');
     }
   }
-  // Will contain search component
-  // will container friend requests component.
-  // Will contain people you may know component. 
+
+  if (isLoading) {
+    return (
+      <div>Loading bruz</div>
+    )
+  }
+  
   return (
     <>
-      {toast.active &&
-        <Toast 
-          title={toast.title}
-          type={toast.type} 
-          message={toast.message}
-        />
-      }
+      <ToastComponent />
       {mutualFriendModal && 
         <MutualFriendModal 
           userId={mutualFriendModal}

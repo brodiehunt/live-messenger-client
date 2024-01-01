@@ -30,7 +30,6 @@ export default function Conversation() {
         const conversation = await getConversation(conversationId);
         console.log(conversation)
         setConversation(conversation);
-        setMessages(conversation.messages);
       } catch(error) {
         console.log('error', error)
       }

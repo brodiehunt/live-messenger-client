@@ -2,7 +2,7 @@ import api from '../config/api';
 
 export const createConversation = async (recipientIds) => {
   const response = await api.post('/conversation', recipientIds);
-  return response.data.data;
+  return response;
 }
 
 export const getConversation = async (conversationId) => {

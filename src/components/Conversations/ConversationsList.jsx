@@ -1,7 +1,8 @@
 import styled from "styled-components"
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { getConversations } from "../../services/conversationServices";
 import ConversationListItem from "./ConversationListItem";
+import AppContext from "../../hooks/StateContext";
 
 const ConversationListStyles = styled.div`
   padding: 1rem;
@@ -9,29 +10,44 @@ const ConversationListStyles = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
+  /* flex-grow: 1; */
+  /* height: 400px; */
+  overflow-y: scroll;
 `
 
 export default function ConversationsList({user}) {
-  const [conversations, setConversations] = useState(null);
-  
+  // const [conversations, setConversations] = useState(null);
+  const {store, dispatch} = useContext(AppContext);
+  const cachedConversations = store.conversations;
+
   useEffect(() => {
+    console.log('useEffect Triggered')
     const fetchConversations = async () => {
       try {
         const conversationList = await getConversations();
-        setConversations(conversationList);
-        console.log(conversationList);
+        // setConversations(conversationList);
+        dispatch({
+          type: 'setConversations',
+          data: conversationList
+        })
       } catch(error) {
         console.log('error', error);
       }
     }
 
-    fetchConversations();
+    if (!cachedConversations) {
+      console.log('fetching conversations')
+      fetchConversations();
+    } 
+    
   }, [])
+
+  
   return (
     <ConversationListStyles>
-      {conversations && conversations.length > 0 ?
+      {cachedConversations && cachedConversations.length > 0 ?
         (
-          conversations.map((conv) => {
+          cachedConversations.map((conv) => {
             return (
               <ConversationListItem 
                 conversation={conv} 

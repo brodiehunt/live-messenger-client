@@ -6,6 +6,19 @@ export default function stateReducer(state, action) {
         user: action.data,
       }
     }
+    case 'setConversations': {
+      return {
+        ...state,
+        conversations: action.data
+      }
+    }
+    case 'addConversation': {
+      const newConversations = [...state.conversations, action.data];
+      return {
+        ...state,
+        conversations: newConversations
+      }
+    }
     default: 
     return state;
   }

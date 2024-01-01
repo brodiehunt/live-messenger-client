@@ -26,6 +26,19 @@ export default function NewConversation() {
     }
   }
 
+  function insertSortedImmutable(array, newItem) {
+    // Find the index where the new item should be inserted
+    const index = array.findIndex(item => new Date(item.updatedAt) < new Date(newItem.updatedAt));
+  
+    if (index === -1) {
+      // If no such index is found, the new item is the latest and should be added at the end
+      return [...array, newItem];
+    } else {
+      // Create a new array with the new item inserted at the found index
+      return [...array.slice(0, index), newItem, ...array.slice(index)];
+    }
+  }
+
   function deleteRecipient(userId){
     const updatedRecipients = recipients.filter((recipient) => {
       return recipient._id !== userId
@@ -43,11 +56,22 @@ export default function NewConversation() {
     })
 
     try {
-      const newConversation = await createConversation(userIds);
+      const newConversationResponse = await createConversation(userIds);
+      const newConversation = newConversationResponse.data.data;
+      console.log(newConversationResponse, newConversationResponse.status)
+      if (newConversationResponse.status === 201) {
+        // dispatch
+        const newConversationsState = insertSortedImmutable(store.conversations, newConversation)
+
+        dispatch({
+          type: 'setConversations',
+          data: newConversationsState
+        })
+      }
+    
       return navigate(`/${user._id}/conversation/${newConversation._id}`);
-      console.log(newConversation);
+      
     } catch(error) {
-      console.log(error);
       activateToast('Error creating Conversation', 'Could not create your conversation.', 'error')
     }
     

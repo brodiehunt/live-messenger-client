@@ -18,11 +18,16 @@ const CurrentFriendshipsStyles = styled.div`
 export default function CurrentFriendships() {
   const [friendships, setFriendships] = useState(null);
   const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   useEffect(() => {
     const fetchFriends = async () => {
       try {
+        await timeout(3000);
         const friends = await getFriends();
         // Sort friends
         const friendsHash = createAlphabetizedArr(friends);
@@ -31,6 +36,7 @@ export default function CurrentFriendships() {
       } catch(error) {
         setError('Error getting your friendships, try again later.');
       }
+      setIsLoading(false);
     }
 
     fetchFriends();
@@ -86,6 +92,12 @@ export default function CurrentFriendships() {
         </div>
       )
     })
+  }
+
+  if (isLoading) {
+    return (
+      <div>Loading Bruz</div>
+    )
   }
 
   return (
