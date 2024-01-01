@@ -5,6 +5,7 @@ import FormButton from "../FormButton";
 import { IoIosClose } from "react-icons/io";
 import AppContext from "../../hooks/StateContext";
 import { updateSettings } from "../../services/accountServices";
+import { useToast } from "../../hooks/useToast";
 
 
 export default function AccountSettingsForm() {
@@ -12,7 +13,12 @@ export default function AccountSettingsForm() {
   const user = store.user;
   const [formState, setFormState] = useState({...user.accountSettings});
   const [formError, setFormError] = useState(null);
-  
+  const [isLoading, setIsLoading] = useState(false);
+  const { activateToast, ToastComponent } = useToast();
+
+  const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   const handleChange = (event) => {
 
@@ -24,28 +30,34 @@ export default function AccountSettingsForm() {
   const handleSubmit = async (event) => {
 
     event.preventDefault();
-
+    setIsLoading(true)
     try {
+      await timeout(3000)
       const response = await updateSettings(formState);
       const updatedUser = response.data.data;
       dispatch({
         type: 'setUser',
         data: updatedUser
       })
+      activateToast('Success', 'Account settings updated', 'success');
       // Give some success message
     } catch(error) {
       if (error.response) {
         setFormError(error.response.data.error);
-      } else if (response.request) {
+      } else if (error.request) {
         setFormError(`${error.message}. Try again later`)
       } else {
         console.log('random app error. navigate to error page');
       }
+      activateToast('Error', 'Account settings Could not be updated', 'error');
+      setFormState({...user.accountSettings});
     }
+    setIsLoading(false);
   };
 
   return (
     <AccountSettingsFormStyles onSubmit={handleSubmit}>
+      <ToastComponent />
       {formError &&
         <div className="error">
           {formError}
@@ -97,7 +109,7 @@ export default function AccountSettingsForm() {
         </p>
       </ToggleSwitch>
       <FormButton
-        disabled={false}
+        disabled={isLoading}
       >
         Save
       </FormButton>
