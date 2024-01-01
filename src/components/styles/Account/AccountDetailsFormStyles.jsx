@@ -9,6 +9,15 @@ const buttonHover = keyframes`
   }
 `;
 
+const loading = keyframes`
+  0%, 100% {
+    left: 0
+  }
+  50% {
+    left: 80%;
+  }
+`
+
 const AccountDetailsFormStyles = styled.form`
   display: flex;
   gap: 1rem;
@@ -50,6 +59,21 @@ const AccountDetailsFormStyles = styled.form`
   input:focus {
     border-bottom: 2px solid var(--primary);
     outline: none;
+  }
+
+  .progress-loading {
+    height: 5px;
+    width: 100%;
+    position: relative;
+
+    .movement {
+      position: absolute;
+      width: 20%;
+      height: 100%;
+      border-radius: 1rem;
+      background-color: var(--primary);
+      animation: ${loading} 1s ease-in-out infinite;
+    }
   }
 
   .error-message {

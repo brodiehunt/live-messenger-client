@@ -2,8 +2,9 @@ import { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { FaRegCheckCircle } from "react-icons/fa";
 import { RiErrorWarningLine } from "react-icons/ri";
+import { AnimatePresence, motion } from 'framer-motion';
 
-const ToastStyles = styled.div`
+const ToastStyles = styled(motion.div)`
   --color: ${props => props.$type === 'success' ? 'var(--success-green)' : 'var(--error-red)'};
   min-width: 100px;
   max-width: 350px;
@@ -17,6 +18,7 @@ const ToastStyles = styled.div`
   position: fixed;
   bottom: 2rem;
   right: 1rem; 
+  z-index: 2;
 
   .toast-icon {
     width: 25px;
@@ -47,23 +49,27 @@ export const useToast = () => {
   };
 
   const ToastComponent = () => (
-    toast.active && (
-      <ToastStyles $type={toast.type} $isActive={toast.active}>
-        <div className="icon-container">
-          {toast.type === 'success' ?
-            (
-              <FaRegCheckCircle className="toast-icon"/>
-            ) :
-            (
-              <RiErrorWarningLine className="toast-icon"/>
-            )
-        }
-        </div>
-        <div className="message-container">
-          <p className="title">{toast.title}</p>
-          <p>{toast.message}</p>
-        </div>
-    </ToastStyles>
+      toast.active && (
+        <ToastStyles 
+          initial={{x: 350}}
+          animate={{x: 0}}
+          $type={toast.type} 
+          $isActive={toast.active}>
+          <div className="icon-container">
+            {toast.type === 'success' ?
+              (
+                <FaRegCheckCircle className="toast-icon"/>
+              ) :
+              (
+                <RiErrorWarningLine className="toast-icon"/>
+              )
+          }
+          </div>
+          <div className="message-container">
+            <p className="title">{toast.title}</p>
+            <p>{toast.message}</p>
+          </div>
+      </ToastStyles>
     )
   )
 
