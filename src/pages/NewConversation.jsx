@@ -25,7 +25,7 @@ export default function NewConversation() {
       setRecipients([...recipients, user]);
     }
   }
-
+  
   function insertSortedImmutable(array, newItem) {
     // Find the index where the new item should be inserted
     const index = array.findIndex(item => new Date(item.updatedAt) < new Date(newItem.updatedAt));

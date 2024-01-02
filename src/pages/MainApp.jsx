@@ -11,7 +11,7 @@ import { useToast } from '../hooks/useToast';
 const MainWrapper = styled.div`
   max-width: 1400px;
   margin: 0 auto;
-  background-color: var(--background-light);
+  /* background-color: var(--background-light); */
   max-height: 100vh;
   .outlet-container {
     position: relative;

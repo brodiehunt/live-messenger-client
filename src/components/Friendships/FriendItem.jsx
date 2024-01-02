@@ -29,11 +29,20 @@ const FriendItemStyles = styled.div`
   button {
     border: none;
     background: none;
+    cursor: pointer;
 
     svg {
       color: var(--primary);
       width: 25px;
       height: 25px;
+    }
+  }
+
+  button:hover,
+  button:focus {
+
+    svg {
+      color: var(--primary-hover);
     }
   }
   
@@ -42,7 +51,8 @@ const FriendItemStyles = styled.div`
 
 export default function FriendItem({
   friend,
-  handleDeleteFriend
+  handleDeleteFriend,
+  handleNewMessage
 }) {
 
   return (
@@ -53,7 +63,7 @@ export default function FriendItem({
       </div>
       <div className="button-group">
         <button 
-          onClick={() => console.log('hello')}
+          onClick={() => handleNewMessage(friend._id, friend.username)}
         >
           <BiMessageRounded />
         </button>
