@@ -24,7 +24,7 @@ export default function SearchFriend() {
   const [isLoading, setIsLoading] = useState(true);
   const [mutualFriendModal, setMutualFriendModal] = useState(null);
   const { activateToast, ToastComponent } = useToast()
-  
+  console.log('sent requests', sentRequests);
   const timeout = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
@@ -37,10 +37,23 @@ export default function SearchFriend() {
         }
       }
 
-      socket.on('newRequest', handleNewRequest)
-  
+      const handleAcceptedRequest = (friendship) => {
+        if (friendship) {
+          const sentRequestsCopy = [...sentRequests];
+          const newRequests = sentRequestsCopy.filter((request) => {
+            return request._id !== friendship._id
+          })
+      
+          setSentRequests(newRequests);
+        }
+      }
+
+      socket.on('newRequest', handleNewRequest);
+      socket.on('requestAccepted', handleAcceptedRequest);
+
       return () => {
         socket.off('newRequest', handleNewRequest)
+        socket.off('requestAccepted', handleAcceptedRequest);
       }
     }
   }, [socket])

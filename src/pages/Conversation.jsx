@@ -8,6 +8,7 @@ import AppContext from "../hooks/StateContext";
 import styled from 'styled-components';
 import ConversationHeader from '../components/Conversations/ConversationHeader';
 import ConversationModal from '../components/Conversations/ConversationModal';
+import SocketContext from '../hooks/socket';
 
 const ConversationStyles = styled.div`
   height: 100vh;
@@ -18,17 +19,19 @@ const ConversationStyles = styled.div`
 export default function Conversation() {
   const params = useParams();
   const { store, dispatch } = useContext(AppContext);
+  const socket = useContext(SocketContext);
   const [conversation, setConversation] = useState(null);
   const [settingsModal, setSettingsModal] = useState(false);
 
   const user = store.user;
   const conversationId = params.conversationId;
+ 
 
   useEffect(() => {
     const fetchConversation = async () => {
       try {
         const conversation = await getConversation(conversationId);
-        console.log(conversation)
+        console.log(conversation, 'conversation')
         setConversation(conversation);
       } catch(error) {
         console.log('error', error)
@@ -37,6 +40,31 @@ export default function Conversation() {
 
     fetchConversation();
   }, [conversationId]);
+
+  useEffect(() => {
+    if (socket) {
+      const handleNewMessage = (updatedConv) => {
+        const newMessage = updatedConv.lastMessage;
+        if (updatedConv._id === conversationId) {
+          setConversation((currentConversation) => {
+            if (currentConversation) {
+              return {
+                ...currentConversation,
+                messages: [...currentConversation.messages, newMessage]
+              };
+            }
+            return null;
+          })
+        }
+      }
+
+      socket.on('newMessage', handleNewMessage);
+
+      return () => {
+        socket.off('newMessage', handleNewMessage);
+      }
+    }
+  }, [socket, conversationId]);
 
   function addNewMessage(message) {
     setConversation({...conversation, messages: [...conversation.messages, message]})

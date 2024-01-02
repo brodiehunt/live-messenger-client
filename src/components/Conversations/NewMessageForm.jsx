@@ -1,7 +1,8 @@
 import styled from "styled-components"
 import { LuSendHorizonal } from "react-icons/lu";
-import {useState} from 'react';
+import {useContext, useState} from 'react';
 import { sendMessage } from "../../services/conversationServices";
+import AppContext from "../../hooks/StateContext";
 const NewMessageFormStyles = styled.div`
   margin-top: auto;
   background-color: white;
@@ -52,7 +53,7 @@ export default function NewMessageForm({
   conversationId
 }) {
   const [input, setInput] = useState({message: ''});
-
+  const {store, dispatch} = useContext(AppContext);
   const handleChange = (event) => {
     const {name, value} = event.target;
 
@@ -65,7 +66,19 @@ export default function NewMessageForm({
       return
     }
     try {
-      const newMessage = await sendMessage(conversationId, input);
+      // Also update conversation list state here
+      const conversation = await sendMessage(conversationId, input);
+      const filterConvo = [...store.conversations].filter((conv) => {
+        return conv._id !== conversation._id;
+      })
+      const newConversations = [conversation, ...filterConvo]
+
+      dispatch({
+        type: 'setConversations',
+        data: newConversations
+      })
+      
+      const newMessage = conversation.lastMessage;
       addNewMessage(newMessage);
     } catch(error) {
       console.log(error)

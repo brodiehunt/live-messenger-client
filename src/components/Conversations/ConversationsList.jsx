@@ -3,6 +3,7 @@ import { useState, useEffect, useContext } from 'react';
 import { getConversations } from "../../services/conversationServices";
 import ConversationListItem from "./ConversationListItem";
 import AppContext from "../../hooks/StateContext";
+import SocketContext from "../../hooks/socket";
 
 const ConversationListStyles = styled.div`
   padding: 1rem;
@@ -18,6 +19,7 @@ const ConversationListStyles = styled.div`
 export default function ConversationsList({user}) {
   // const [conversations, setConversations] = useState(null);
   const {store, dispatch} = useContext(AppContext);
+  const socket = useContext(SocketContext);
   const cachedConversations = store.conversations;
 
   useEffect(() => {
@@ -39,6 +41,30 @@ export default function ConversationsList({user}) {
     } 
     
   }, [])
+
+  useEffect(() => {
+    if (socket) {
+      const handleConversationsUpdate = (conversation) => {
+        if (store.conversations) {
+          const filterConvo = [...store.conversations].filter((conv) => {
+            return conv._id !== conversation._id;
+          })
+          const newConversations = [conversation, ...filterConvo]
+          console.log('enter list event listener')
+          dispatch({
+            type: 'setConversations',
+            data: newConversations
+          })
+        }
+      }
+
+      socket.on('newMessage', handleConversationsUpdate);
+
+      return () => {
+        socket.off('newMessage', handleConversationsUpdate);
+      }
+    }
+  }, [socket, store.conversations])
 
   
   return (
