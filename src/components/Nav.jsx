@@ -4,6 +4,8 @@ import { TiMessages } from "react-icons/ti";
 import { BiMessageAdd } from "react-icons/bi";
 import { FaRegUser } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
+import { useContext, useState, useEffect } from 'react';
+import AppContext from '../hooks/StateContext';
 
 const buttonHover = keyframes`
   0%, 100% {
@@ -24,11 +26,27 @@ const NavStyles = styled.nav`
 
   a {
     padding: 1rem;
+    position: relative;
 
     svg {
       color: var(--primary);
       height: 20px;
       width: 20px;
+    }
+
+    .notification {
+      width: 20px;
+      height: 20px;
+      padding: 0.2rem;
+      font-size: 0.6rem;
+      font-weight: 700;
+      color: white;
+      background-color: var(--secondary);
+      border-radius: 50%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      text-align: center;
     }
   }
 
@@ -43,6 +61,8 @@ const NavStyles = styled.nav`
 `;
 
 export default function Nav({user}) {
+  const {store} = useContext(AppContext);
+  
   return (
     <NavStyles>
          <Link to={`/${user._id}`}
@@ -64,6 +84,9 @@ export default function Nav({user}) {
           
          >
          <FaUserPlus />
+        {store.newRequests.count > 0 &&
+          <div className='notification'>{store.newRequests.count}</div> 
+        }
          </Link>
       </NavStyles>
   )

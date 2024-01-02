@@ -1,5 +1,6 @@
 import { useContext,useState, useEffect } from "react";
 import AppContext from "../hooks/StateContext";
+import SocketContext from "../hooks/socket";
 import { 
   getRecievedRequests, 
   getSentRequests,
@@ -17,6 +18,7 @@ import { useToast } from "../hooks/useToast";
 export default function SearchFriend() {
   const {store, dispatch} = useContext(AppContext);
   const user = store.user;
+  const socket = useContext(SocketContext);
   const [recievedRequests, setRecievedRequests] = useState([]);
   const [sentRequests, setSentRequests] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -26,6 +28,22 @@ export default function SearchFriend() {
   const timeout = (ms) => {
     return new Promise(resolve => setTimeout(resolve, ms))
   }
+
+  useEffect(() => {
+    if (socket) {
+      const handleNewRequest = (friendship) => {
+        if (friendship) {
+          setRecievedRequests(prevRequests => [friendship, ...prevRequests]);
+        }
+      }
+
+      socket.on('newRequest', handleNewRequest)
+  
+      return () => {
+        socket.off('newRequest', handleNewRequest)
+      }
+    }
+  }, [socket])
 
   useEffect(() => {
     const getRequest = async () => {
@@ -47,10 +65,15 @@ export default function SearchFriend() {
     }
 
     getRequest();
+    dispatch({
+      type: 'setRequests',
+      data: {count: 0}
+    })
   }, []);
 
+  
   const addNewSentFriendship = (newRequest) => {
-    setSentRequests([...sentRequests, newRequest])
+    setSentRequests([newRequest, ...sentRequests])
   }
 
   const handleDelete = async (friendshipId, type) => {

@@ -6,7 +6,9 @@ const AppContext = createContext();
 export const StateProvider = ({children}) => {
   const initialState = {
     user: null,
-    newRequests: false,
+    newRequests: {
+      count: 0
+    },
     conversations: null,
   };
 

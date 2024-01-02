@@ -5,6 +5,8 @@ import useWindowSize from '../hooks/UseWindowSize';
 import { getAccount } from '../services/accountServices';
 import AppContext from '../hooks/StateContext';
 import Conversations from './Conversations';
+import SocketContext, { SocketProvider } from '../hooks/socket';
+import { useToast } from '../hooks/useToast';
 
 const MainWrapper = styled.div`
   max-width: 1400px;
@@ -42,7 +44,9 @@ export default function MainApp() {
   const pathSegments = location.pathname.split('/').filter(Boolean);
   const isHomePage = pathSegments.length === 1;
   const {store, dispatch} = useContext(AppContext);
+  const socket = useContext(SocketContext);
   const user = store.user;
+  const {ToastComponent, activateToast} = useToast();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -57,7 +61,11 @@ export default function MainApp() {
           type: 'setUser',
           data: retrievedUser
         })
-
+        dispatch({
+          type: 'setRequests',
+          data: {count: retrievedUser.newRequests}
+        })
+        
       } catch(error) {
         if (error.response) {
           navigate('/signin');
@@ -74,26 +82,59 @@ export default function MainApp() {
     fetchUser();
   }, [])
 
+  useEffect(() => {
+  
+    if (socket) {
+      socket.on('newRequest', (friendship) => {
+        if (friendship) {
+          const requestsState = {...store.newRequests}
+          requestsState.count = requestsState.count + 1;
+          dispatch({
+            type: 'setRequests',
+            data: requestsState
+          })
+          activateToast(`New friend request.`, `${friendship.userDetails.username} sent you a request`, 'success')
+        }
+      });
+
+      socket.on('requestAccepted', (friendship) => {
+        console.log('event fired');
+        if (friendship) {
+          const otherUser = friendship.users.find((userObj) => {
+            return userObj._id !== user._id
+          })
+          activateToast('Friendship Accepted', `${otherUser.username} accepted your friend request`, 'success');
+        }
+      })
+
+      return () => {
+        socket.off('newRequest');
+        socket.off('requestAccepted');
+      }
+    }
+  }, [socket])
+
   if (!user) return <div></div>
 
   return (
-    <MainWrapper className="main-app">
-      {
-      (width <= 768) ? 
-        
-        isHomePage ?
-          <Conversations user={user} />
-        : <div className="outlet-container">
-            <Outlet />
-          </div>
-        : <>
+      <MainWrapper className="main-app">
+        <ToastComponent />
+        {
+        (width <= 768) ? 
+          
+          isHomePage ?
             <Conversations user={user} />
-            <div className="outlet-container">
+          : <div className="outlet-container">
               <Outlet />
             </div>
-           
-          </>
-    }
-    </MainWrapper>
+          : <>
+              <Conversations user={user} />
+              <div className="outlet-container">
+                <Outlet />
+              </div>
+            
+            </>
+      }
+      </MainWrapper>
   )
 }

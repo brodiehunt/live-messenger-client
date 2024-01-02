@@ -6,6 +6,12 @@ export default function stateReducer(state, action) {
         user: action.data,
       }
     }
+    case 'setRequests': {
+      return {
+        ...state,
+        newRequests: action.data
+      }
+    }
     case 'setConversations': {
       return {
         ...state,

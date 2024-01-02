@@ -21,7 +21,6 @@ export default function ConversationsList({user}) {
   const cachedConversations = store.conversations;
 
   useEffect(() => {
-    console.log('useEffect Triggered')
     const fetchConversations = async () => {
       try {
         const conversationList = await getConversations();
@@ -36,7 +35,6 @@ export default function ConversationsList({user}) {
     }
 
     if (!cachedConversations) {
-      console.log('fetching conversations')
       fetchConversations();
     } 
     

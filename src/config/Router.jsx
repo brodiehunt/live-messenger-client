@@ -12,7 +12,7 @@ import Friends from '../pages/Friends';
 import SearchFriend from '../pages/SearchFriend';
 import AuthCallbackPage from '../pages/AuthCallbackPage';
 import MainApp from '../pages/MainApp';
-
+import { SocketProvider } from '../hooks/socket';
 const Router = () => {
   const router = createBrowserRouter([
     {
@@ -45,7 +45,7 @@ const Router = () => {
         },
         {
           path: '/:userId',
-          element: <MainApp />,
+          element: <SocketProvider><MainApp /></SocketProvider>,
           children: [
             {
               path: '/:userId/account',
