@@ -60,6 +60,7 @@ export default function SearchFriend() {
 
   useEffect(() => {
     const getRequest = async () => {
+      setIsLoading(true);
       await timeout(3000);
       try {
         const [recieved, sent] = await Promise.all([
@@ -128,11 +129,11 @@ export default function SearchFriend() {
     }
   }
 
-  if (isLoading) {
-    return (
-      <div>Loading bruz</div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div>Loading bruz</div>
+  //   )
+  // }
   
   return (
     <>
@@ -156,6 +157,7 @@ export default function SearchFriend() {
         sentRequests={sentRequests}
         handleDelete={handleDelete}
         handleAccept={handleAccept}
+        isLoading={isLoading}
       />
       <PeopleYouMayKnow 
         addNewSentFriendship={addNewSentFriendship}

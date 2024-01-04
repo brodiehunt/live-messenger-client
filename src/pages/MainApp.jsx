@@ -7,6 +7,8 @@ import AppContext from '../hooks/StateContext';
 import Conversations from './Conversations';
 import SocketContext, { SocketProvider } from '../hooks/socket';
 import { useToast } from '../hooks/useToast';
+import 'react-loading-skeleton/dist/skeleton.css';
+import { SkeletonTheme } from 'react-loading-skeleton';
 
 const MainWrapper = styled.div`
   max-width: 1400px;
@@ -117,6 +119,7 @@ export default function MainApp() {
   if (!user) return <div></div>
 
   return (
+    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
       <MainWrapper className="main-app">
         <ToastComponent />
         {
@@ -136,5 +139,6 @@ export default function MainApp() {
             </>
       }
       </MainWrapper>
+    </SkeletonTheme>
   )
 }

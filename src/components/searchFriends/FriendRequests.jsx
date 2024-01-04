@@ -1,12 +1,14 @@
 import { useState } from 'react';
 import RequestItem from './FriendRequestItem';
 import FriendRequestsStyles from '../styles/searchFriends/FriendRequestStyles';
+import RequestSkeleton from '../Skeleton/RequestSkeleton';
 
 const FriendRequests = ({
   recievedRequests,
   sentRequests,
   handleDelete,
-  handleAccept
+  handleAccept,
+  isLoading
 }) => {
   const [recievedActive, setRecievedActive] = useState(true);
   
@@ -46,7 +48,11 @@ const FriendRequests = ({
                 })
               )
               : (
-                <div className="no-requests">You have no Friend Requests</div>
+                isLoading ? (
+                  <RequestSkeleton count={4} />
+                ) : (
+                  <div className="no-requests">You have no pending requests.</div>
+                )
               )
           )
           : (
@@ -65,7 +71,11 @@ const FriendRequests = ({
               })
             )
             : (
-              <div className="no-requests">You have no pending requests.</div>
+              isLoading ? (
+                <RequestSkeleton count={4} />
+              ) : (
+                <div className="no-requests">You have no pending requests.</div>
+              )
             )
           )
         }
