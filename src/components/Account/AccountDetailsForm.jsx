@@ -87,12 +87,10 @@ export default function AccountDetailsForm({
           className={inputError[name] && 'error'}
         />
         {isLoading && 
-          <div className="progress-loading">
-            <div
-              className="movement"
-            >
-
-            </div>
+          <div 
+            className="progress-loading"
+            aria-hidden="true"
+          >
           </div>
         }
         {serverError && 

@@ -1,4 +1,16 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
+
+const loading = keyframes`
+  from {
+    background-position: 0 0;
+    /* rotate: 0; */
+  }
+
+  to {
+    background-position: 100% 100%;
+    /* rotate: 360deg; */
+  }
+`;
 
 const AccountSettingsFormStyles = styled.form`
   margin-bottom: 3rem;
@@ -21,6 +33,22 @@ const AccountSettingsFormStyles = styled.form`
     cursor: pointer;
     width: 20px;
     height: 20px;
+  }
+
+  .progress-loading {
+    height: 10px;
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 1rem;
+    position: relative;
+    background-image: linear-gradient(
+        to right,
+        var(--secondary-hover) 0%,
+        var(--primary-hover) 50%,
+        var(--secondary-hover) 100%
+      );
+    background-size: 50% auto;
+    animation: ${loading} 0.5s linear infinite;
   }
   
 `;

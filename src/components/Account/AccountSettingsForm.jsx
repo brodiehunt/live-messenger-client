@@ -67,6 +67,13 @@ export default function AccountSettingsForm() {
           />
         </div>
       }
+      {isLoading && 
+          <div 
+            className="progress-loading"
+            aria-hidden="true"
+          >
+          </div>
+        }
       <ToggleSwitch
         name="isPrivate"
         checked={formState.isPrivate}

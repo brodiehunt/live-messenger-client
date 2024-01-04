@@ -90,6 +90,7 @@ const RegisterForm = () => {
         onBlur={handleBlur}
         elRef={fieldRefs.name}
         disabled={isLoading}
+        aria-busy={isLoading}
       >
         Name
       </InputField>
