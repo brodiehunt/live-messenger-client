@@ -7,7 +7,7 @@ import { useToast } from '../../hooks/useToast';
 import { createConversation } from '../../services/conversationServices';
 import AppContext from '../../hooks/StateContext';
 import { Link, useNavigate } from 'react-router-dom';
-
+import RequestSkeleton from '../Skeleton/RequestSkeleton';
 const CurrentFriendshipsStyles = styled.div`
 
   .letter-group {
@@ -244,11 +244,11 @@ export default function CurrentFriendships() {
     }
   }
 
-  if (isLoading) {
-    return (
-      <div>Loading Bruz</div>
-    )
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div>Loading Bruz</div>
+  //   )
+  // }
 
   if (error) {
     return (
@@ -269,36 +269,43 @@ export default function CurrentFriendships() {
         label="Search your Friends"
         handleChange={handleSearchChange}
       />
-      {
-        !searchVal && friendships ? 
-        (
-          Object.keys(friendships).length ? 
+      { 
+        isLoading ? (
+          <div className="letter-group">
+            <RequestSkeleton count={10} />
+          </div>
+        ) : (
+          !searchVal && friendships ? 
           (
-            createFriendshipContacts(friendships)
+            Object.keys(friendships).length ? 
+            (
+              createFriendshipContacts(friendships)
+            ) : (
+              <div className="no-friends-container">
+                You don't have any friend yet!.
+                <Link to={`/${store.user._id}/search-friends`}>
+                  Find Friends
+                </Link>
+              </div>
+            )
           ) : (
-            <div className="no-friends-container">
-              You don't have any friend yet!.
-              <Link to={`/${store.user._id}/search-friends`}>
-                Find Friends
-              </Link>
+            <div className="search-container">
+              <header>
+                <h2>Top results</h2>
+                <button
+                  onClick={() => setSearchVal('')}
+                >
+                  Cancel Search
+                </button>
+              </header>
+              <div className="results-container">
+                {findMatchingFriends()}
+              </div>
             </div>
           )
-        ) : (
-          <div className="search-container">
-            <header>
-              <h2>Top results</h2>
-              <button
-                onClick={() => setSearchVal('')}
-              >
-                Cancel Search
-              </button>
-            </header>
-            <div className="results-container">
-               {findMatchingFriends()}
-            </div>
-          </div>
         )
       }
     </CurrentFriendshipsStyles>
   )
 }
+
