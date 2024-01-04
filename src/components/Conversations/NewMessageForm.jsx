@@ -7,7 +7,7 @@ const NewMessageFormStyles = styled.div`
   margin-top: auto;
   background-color: white;
   padding: 2rem 1rem;
-
+  border-top: 1px solid rgba(135, 135, 157, 0.3);
   form {
     display: flex;
     align-items: center;

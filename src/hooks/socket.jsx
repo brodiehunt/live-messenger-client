@@ -13,7 +13,7 @@ export const SocketProvider = ({children}) => {
   useEffect(() => {
 
     if (store.user && store.user._id) {
-      const newSocket = socketio.connect('http://localhost:3000', {
+      const newSocket = socketio.connect(import.meta.env.VITE_SERVER_URL, {
         query: { userId: user._id}
       });
 

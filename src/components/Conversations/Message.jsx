@@ -9,14 +9,16 @@ const MessageStyles = styled.div`
   max-width: 60%;
 
   .message-content {
-    background-color: var(--primary);
-    color: white;
-    padding: 1rem;
+    background-color: ${({$isUserMessage}) => $isUserMessage ? 'var(--primary)': '#E5E5EA'};
+    color: ${({$isUserMessage}) => $isUserMessage ? 'white': 'var(--text-dark)'};
+    padding: 0.5rem 1rem;
     border-radius: 1rem;
     position: relative;
-    line-height: 1.5rem;
-    letter-spacing: 0.0625rem;
-    font-weight: 400;
+    font-size: 0.9rem;
+    font-weight: 500;
+    width: fit-content;
+    margin-left: ${({$isUserMessage}) => $isUserMessage ? 'auto': ''};
+    margin-right: ${({$isUserMessage}) => $isUserMessage ? '': 'auto'};
   }
 
   .message-content::after {
@@ -29,7 +31,8 @@ const MessageStyles = styled.div`
     height: 10px;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: 10px solid var(--primary);
+    border-bottom: ${({$isUserMessage}) => $isUserMessage ? '10px solid var(--primary)': '10px solid #E5E5EA'};
+    /* border-bottom: 10px solid var(--primary); */
     border-radius: 4px;
   }
 

@@ -19,3 +19,8 @@ export const sendMessage = async (conversationId, formData) => {
   const response = await api.post(`/conversation/${conversationId}/message`, formData);
   return response.data.data;
 }
+
+export const sendReadReciept = async (conversationId) => {
+  const response = await api.put(`conversation/${conversationId}/read`);
+  return response.data.data;
+}

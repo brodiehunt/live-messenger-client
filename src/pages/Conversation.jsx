@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getConversation } from '../services/conversationServices';
+import { getConversation, sendReadReciept } from '../services/conversationServices';
 import PageHeader from "../components/PageHeader";
 import MessageContainer from '../components/Conversations/MessagesContainer';
 import NewMessageForm from '../components/Conversations/NewMessageForm';
@@ -9,11 +9,13 @@ import styled from 'styled-components';
 import ConversationHeader from '../components/Conversations/ConversationHeader';
 import ConversationModal from '../components/Conversations/ConversationModal';
 import SocketContext from '../hooks/socket';
+import ReadByContainer from '../components/Conversations/ReadByContainer';
 
 const ConversationStyles = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
+  position: relative;
 `;
 
 export default function Conversation() {
@@ -24,15 +26,29 @@ export default function Conversation() {
   const [settingsModal, setSettingsModal] = useState(false);
 
   const user = store.user;
+  // const conversations = store.conversations;
   const conversationId = params.conversationId;
  
 
   useEffect(() => {
     const fetchConversation = async () => {
       try {
-        const conversation = await getConversation(conversationId);
-        console.log(conversation, 'conversation')
-        setConversation(conversation);
+        const fetchedConversation = await getConversation(conversationId);
+        setConversation(fetchedConversation);
+        // Update conversations list... 
+        if (store.conversations) {
+          const updatedConversations = store.conversations.map((conv) => {
+            if (conv._id === fetchedConversation._id) {
+              return {...conv, readBy: fetchedConversation.readBy}
+            }
+            return conv;
+          })
+        
+          dispatch({
+            type: 'setConversations',
+            data: updatedConversations
+          });
+        }
       } catch(error) {
         console.log('error', error)
       }
@@ -43,28 +59,75 @@ export default function Conversation() {
 
   useEffect(() => {
     if (socket) {
-      const handleNewMessage = (updatedConv) => {
+      const handleNewMessage = async (updatedConv) => {
         const newMessage = updatedConv.lastMessage;
         if (updatedConv._id === conversationId) {
           setConversation((currentConversation) => {
             if (currentConversation) {
               return {
                 ...currentConversation,
+                readBy: updatedConv.readBy,
                 messages: [...currentConversation.messages, newMessage]
               };
             }
             return null;
           })
+          console.log('what is happening')
+          // send message to db that you have read the convo
+          try {
+            const newReadBy = await sendReadReciept(updatedConv._id);
+            console.log('after', newReadBy);
+            setConversation((currentConversation) => {
+              if (currentConversation) {
+                return {
+                  ...currentConversation,
+                  readBy: newReadBy.readBy
+                }
+              }
+            });
+            console.log('after after');
+            if (store.conversations) {
+              const updatedConversations = store.conversations.map((conv) => {
+                if (conv._id === conversation._id) {
+                  return {...conv, readBy: newReadBy.readBy, lastMessage: newReadBy.lastMessage}
+                }
+                return conv;
+              })
+              console.log('updatedConvers', updatedConversations);
+              dispatch({
+                type: 'setConversations',
+                data: updatedConversations
+              });
+            }
+          } catch(error) {
+            console.log(error);
+          }
         }
       }
 
+      const handleReadNotification = (updatedConv) => {
+        if (updatedConv._id === conversationId) {
+          setConversation((currentConversation) => {
+            if (currentConversation) {
+              return {
+                ...currentConversation,
+                readBy: updatedConv.readBy
+              }
+            }
+          })
+        }
+      }
+
+
       socket.on('newMessage', handleNewMessage);
+      socket.on('read', handleReadNotification);
 
       return () => {
         socket.off('newMessage', handleNewMessage);
+        socket.off('read', handleReadNotification);
       }
     }
-  }, [socket, conversationId]);
+  }, [socket, conversationId, store.conversations]);
 
   function addNewMessage(message) {
     setConversation({...conversation, messages: [...conversation.messages, message]})
@@ -92,6 +155,10 @@ export default function Conversation() {
       />
       <MessageContainer 
         messages={conversation.messages}
+      />
+      <ReadByContainer 
+        readBy={conversation.readBy}
+        participants={conversation.participants}
       />
       <NewMessageForm 
         addNewMessage={addNewMessage}

@@ -49,8 +49,8 @@ export default function ConversationsList({user}) {
           const filterConvo = [...store.conversations].filter((conv) => {
             return conv._id !== conversation._id;
           })
+          
           const newConversations = [conversation, ...filterConvo]
-          console.log('enter list event listener')
           dispatch({
             type: 'setConversations',
             data: newConversations

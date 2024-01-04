@@ -8,7 +8,11 @@ const MessageContainerStyles = styled.div`
   flex-direction: column-reverse;
   width: 100%;
   overflow-y: scroll;
-
+  scrollbar-width: none;
+  background-color: var(--background-light);
+  &::-webkit-scrollbar {
+      display: none;
+    }
 `;
 
 export default function MessageContainer({messages}) {
