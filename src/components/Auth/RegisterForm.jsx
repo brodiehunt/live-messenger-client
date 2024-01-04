@@ -44,7 +44,8 @@ const RegisterForm = () => {
     try {
       const response = await registerUserLocal(inputs);
       let user = response.data.data;
-      console.log('this is the handlesubmit', response);
+      const jwt = response.data.jwt
+      localStorage.setItem('jwt', jwt);
       setIsLoading(false);
       dispatch({
         type: 'setUser',

@@ -33,8 +33,10 @@ const SignInForm = () => {
     setIsLoading(true);
     try {
       const response = await signInUserLocal(inputs);
-      let user = response.data.data;
-      console.log(response);
+      const user  = response.data.data;
+      const jwt = response.data.jwt;
+      
+      localStorage.setItem('jwt', jwt);
       dispatch({
         type: 'setUser',
         data: user
