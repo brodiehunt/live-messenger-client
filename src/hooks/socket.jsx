@@ -13,7 +13,8 @@ export const SocketProvider = ({children}) => {
   useEffect(() => {
 
     if (store.user && store.user._id) {
-      const newSocket = socketio.connect(import.meta.env.VITE_SERVER_URL, {
+      const serverURL = import.meta.env.PROD ? import.meta.env.VITE_SERVER_URL_PROD : import.meta.env.VITE_SERVER_URL_DEV;
+      const newSocket = socketio.connect(serverURL, {
         query: { userId: user._id}
       });
 
