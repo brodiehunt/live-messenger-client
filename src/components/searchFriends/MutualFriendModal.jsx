@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { getMutualFriends } from "../../services/friendServices";
 import { IoClose } from "react-icons/io5";
 import MutualFriendModalStyles from '../styles/searchFriends/MutualFriendModalStyles';
-
+import MutualFriendSkeleton from '../Skeleton/MutualFriendSkeleton';
 
 export default function MutualFriendModal({
   userId,
@@ -12,15 +12,21 @@ export default function MutualFriendModal({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
   useEffect(() => {
     const fetchMutualFriends = async () => {
-
+      await timeout(3000);
       try {
+        setIsLoading(true);
         const friends = await getMutualFriends(userId);
         setMutualFriends(friends);
       } catch(error) {
         setError('Oops, cannot get mutual friends')
       }
+      setIsLoading(false);
     }
 
     fetchMutualFriends()
@@ -41,6 +47,9 @@ export default function MutualFriendModal({
           <div className="error">
             {error}
           </div>
+        }
+        {isLoading &&
+          <MutualFriendSkeleton count={5} />
         }
         {mutualFriends &&
           mutualFriends.map((friend) => {

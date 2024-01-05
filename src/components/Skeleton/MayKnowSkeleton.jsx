@@ -6,7 +6,7 @@ const MayKnowSkeletonStyles = styled.div`
   align-items: center;
   /* gap: 2rem; */
   width: 100%;
-  background-color: lightgray;
+  background-color: var(--background-light);
   padding: 0.5rem;
   border-radius: 0.25rem;
 

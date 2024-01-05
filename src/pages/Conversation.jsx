@@ -22,6 +22,7 @@ export default function Conversation() {
   const params = useParams();
   const { store, dispatch } = useContext(AppContext);
   const socket = useContext(SocketContext);
+  const [isLoading, setIsLoading] = useState(true);
   const [conversation, setConversation] = useState(null);
   const [settingsModal, setSettingsModal] = useState(false);
 
@@ -29,10 +30,15 @@ export default function Conversation() {
   // const conversations = store.conversations;
   const conversationId = params.conversationId;
  
+  const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   useEffect(() => {
     const fetchConversation = async () => {
       try {
+        setIsLoading(true);
+        await timeout(3000);
         const fetchedConversation = await getConversation(conversationId);
         setConversation(fetchedConversation);
         // Update conversations list... 
@@ -52,6 +58,7 @@ export default function Conversation() {
       } catch(error) {
         console.log('error', error)
       }
+      setIsLoading(false);
     }
 
     fetchConversation();
@@ -133,10 +140,9 @@ export default function Conversation() {
     setConversation({...conversation, messages: [...conversation.messages, message]})
   }
 
-  if (!conversation) return <div>Ooops</div>
   return (
     <ConversationStyles>
-      {settingsModal && 
+      {settingsModal && conversation &&
         <ConversationModal 
           participants={conversation.participants}
           groupMetaData={conversation.groupMetaData}
@@ -147,19 +153,26 @@ export default function Conversation() {
         pageTitle="Conversation"
         user={user}
       />
+    
       <ConversationHeader 
-        user={user}
-        participants={conversation.participants}
-        groupMetaData={conversation.groupMetaData}
-        setSettingsModal={setSettingsModal}
+      isLoading={isLoading}
+      user={user}
+      participants={conversation?.participants}
+      groupMetaData={conversation?.groupMetaData}
+      setSettingsModal={setSettingsModal}
       />
+      
       <MessageContainer 
-        messages={conversation.messages}
+        isLoading={isLoading}
+        messages={conversation?.messages}
       />
-      <ReadByContainer 
-        readBy={conversation.readBy}
-        participants={conversation.participants}
-      />
+      {!isLoading &&
+        <ReadByContainer 
+          readBy={conversation.readBy}
+          participants={conversation.participants}
+        />
+      }
+      
       <NewMessageForm 
         addNewMessage={addNewMessage}
         conversationId={conversationId}

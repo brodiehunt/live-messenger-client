@@ -4,6 +4,7 @@ import { getConversations } from "../../services/conversationServices";
 import ConversationListItem from "./ConversationListItem";
 import AppContext from "../../hooks/StateContext";
 import SocketContext from "../../hooks/socket";
+import ConversationListSkeleton from "../Skeleton/ConversationListSkeleton";
 
 const ConversationListStyles = styled.div`
   padding: 1rem;
@@ -17,14 +18,21 @@ const ConversationListStyles = styled.div`
 `
 
 export default function ConversationsList({user}) {
-  // const [conversations, setConversations] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
   const {store, dispatch} = useContext(AppContext);
   const socket = useContext(SocketContext);
   const cachedConversations = store.conversations;
+  
+  const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
+        setIsLoading(true)
+        await timeout(3000);
         const conversationList = await getConversations();
         // setConversations(conversationList);
         dispatch({
@@ -33,11 +41,13 @@ export default function ConversationsList({user}) {
         })
       } catch(error) {
         console.log('error', error);
+        setError('Error getting conversations');
       }
+      setIsLoading(false);
     }
 
     if (!cachedConversations) {
-      fetchConversations();
+      fetchConversations(); 
     } 
     
   }, [])
@@ -66,10 +76,15 @@ export default function ConversationsList({user}) {
     }
   }, [socket, store.conversations])
 
-  
+  if (error) {
+    return <div>Error {error}</div>
+  }
   return (
     <ConversationListStyles>
-      {cachedConversations && cachedConversations.length > 0 ?
+      {isLoading ? (
+        <ConversationListSkeleton count={13} />
+      ) : (
+        cachedConversations && cachedConversations.length > 0 ?
         (
           cachedConversations.map((conv) => {
             return (
@@ -82,6 +97,7 @@ export default function ConversationsList({user}) {
         ) : (
           <div>No Conversations yet</div>
         )
+      )
       }
     </ConversationListStyles>
   )

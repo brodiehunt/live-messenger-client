@@ -8,26 +8,12 @@ const RequestSkeletonStyles = styled.div`
   gap: 1rem;
   padding: 1rem;
   width: 100%;
-  background-color: lightgray;
+  background-color: var(--background-light);
   margin-bottom: 0.5rem;
   border-radius: 0.25rem;
 
-  &:hover {
-    background-color: rgba(143, 226, 249, 0.1);
-  }
-  .avatar-container {
-    
-    img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-    }
-  }
-
   .user-username {
     margin-right: auto;
-    font-weight: 500;
-    color: var(--text-dark);
   }
 
   .buttons-container {
@@ -36,20 +22,6 @@ const RequestSkeletonStyles = styled.div`
     align-items: center;
     gap: 1rem;
   } 
-
-  button {
-    background-color: none;
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-  }
-
-  .button-icon {
-    width: 20px;
-    height: 20px;
-    color: var(--primary);
-  }
 `;
 
 export default function RequestSkeleton({count}) {

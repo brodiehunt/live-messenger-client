@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Message from "./Message";
+import MessagesSkeleton from "../Skeleton/MessagesSkeleton";
 
 const MessageContainerStyles = styled.div`
   padding: 0 1rem;
@@ -15,7 +16,7 @@ const MessageContainerStyles = styled.div`
     }
 `;
 
-export default function MessageContainer({messages}) {
+export default function MessageContainer({messages, isLoading}) {
   // reverse map instead!
   // const sortedMessages = messages.sort((a, b) => {
   //   const dateA = new Date(a.createdAt);
@@ -29,7 +30,10 @@ export default function MessageContainer({messages}) {
 
   return (
     <MessageContainerStyles>
-      {messages && messages.length > 0 ?
+      {isLoading ? (
+        <MessagesSkeleton count={10} />
+      ) : (
+        messages && messages.length > 0 ?
         (
           messages.map((message, index, array) => {
             return (
@@ -42,6 +46,8 @@ export default function MessageContainer({messages}) {
         ) : (
           <div>No messages yet</div>
         )
+      )
+      
       }
     </MessageContainerStyles>
   )

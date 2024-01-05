@@ -1,8 +1,37 @@
-import styled from "styled-components";
+import styled, {keyframes} from "styled-components";
 import {useState, useEffect} from 'react';
 import SearchBar from "../SearchBar";
 import useDebounce from "../../hooks/useDebounce";
 import { findFriendsByUsername } from "../../services/friendServices";
+
+
+const loading = keyframes`
+  from {
+    background-position: 0 0;
+    /* rotate: 0; */
+  }
+
+  to {
+    background-position: 100% 100%;
+    /* rotate: 360deg; */
+  }
+`;
+
+const LoadingBar = styled.div`
+  height: 5px;
+  /* width: 100%; */
+  position: relative;
+  margin: 0 1rem;
+  background-image: linear-gradient(
+      to right,
+      var(--secondary-hover) 0%,
+      var(--primary-hover) 50%,
+      var(--secondary-hover) 100%
+    );
+  background-size: 50% auto;
+  animation: ${loading} 0.5s linear infinite;
+  
+`;
 
 const SearchContactsInputStyles = styled.div`
   padding: 1rem;
@@ -68,11 +97,16 @@ export default function SearchContacts({addRecipient}) {
   const [error, setError] = useState(null);
   const [contacts, setContacts] = useState([]);
 
+  const timeout = (ms) => {
+    return new Promise(resolve => setTimeout(resolve, ms))
+  }
+
   useEffect(() => {
     // make api call
     const getUsersFromDb = async () => {
       setIsLoading(true);
       try {
+        await timeout(3000);
         const matchedFriends = await findFriendsByUsername(debouncedVal);
         setContacts(matchedFriends)
       } catch(error) {
@@ -108,33 +142,42 @@ export default function SearchContacts({addRecipient}) {
         label="Search for you friends to create a conversation with"
         handleBlur={handleBlur}
       />
+      {
+        isLoading && 
+          <LoadingBar 
+            className="progress-loading"
+            aria-hidden="true"
+          >
+          </LoadingBar>
+      } 
+  
        {contacts && 
         <div className="results-container">
-            {
-              contacts.length > 0 ? 
-              (
-                contacts.map((userInfo) => {
-                  return (
-                    <div 
-                      key={userInfo.user._id}
-                      className="search-item"
-                      onClick={() => addRecipient(userInfo.user)}
-                    >
-                      <div className="avatar-container">
-                        <img 
-                          src={userInfo.user.avatarUrl} 
-                          alt={`${userInfo.user.name}'s avatar`}
-                        />
+              {
+                contacts.length > 0 ? 
+                (
+                  contacts.map((userInfo) => {
+                    return (
+                      <div 
+                        key={userInfo.user._id}
+                        className="search-item"
+                        onClick={() => addRecipient(userInfo.user)}
+                      >
+                        <div className="avatar-container">
+                          <img 
+                            src={userInfo.user.avatarUrl} 
+                            alt={`${userInfo.user.name}'s avatar`}
+                          />
+                        </div>
+                        <div className="user-username">
+                          {userInfo.user.username}
+                        </div>
                       </div>
-                      <div className="user-username">
-                        {userInfo.user.username}
-                      </div>
-                    </div>
-                  )
-                })
-              ) : (
-              <div className="no-result">No Friends match that name</div>
-              )
+                    )
+                  })
+                ) : (
+                <div className="no-result">No Friends match that name</div>
+                )
               }
         </div>
       }

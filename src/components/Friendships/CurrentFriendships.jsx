@@ -244,12 +244,6 @@ export default function CurrentFriendships() {
     }
   }
 
-  // if (isLoading) {
-  //   return (
-  //     <div>Loading Bruz</div>
-  //   )
-  // }
-
   if (error) {
     return (
       <ErrorContainerStyles className="error-container">

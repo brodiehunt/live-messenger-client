@@ -119,7 +119,7 @@ export default function MainApp() {
   if (!user) return <div></div>
 
   return (
-    <SkeletonTheme baseColor="#313131" highlightColor="#525252">
+    <SkeletonTheme baseColor="#c2cfd6" highlightColor="#f0f3f5">
       <MainWrapper className="main-app">
         <ToastComponent />
         {
