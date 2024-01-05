@@ -53,7 +53,10 @@ export default function NewMessageForm({
   conversationId
 }) {
   const [input, setInput] = useState({message: ''});
+  const [isLoading, setIsLoading] = useState(false);
   const {store, dispatch} = useContext(AppContext);
+
+
   const handleChange = (event) => {
     const {name, value} = event.target;
 
@@ -67,6 +70,7 @@ export default function NewMessageForm({
     }
     try {
       // Also update conversation list state here
+      setIsLoading(true);
       const conversation = await sendMessage(conversationId, input);
       const filterConvo = [...store.conversations].filter((conv) => {
         return conv._id !== conversation._id;
@@ -83,6 +87,7 @@ export default function NewMessageForm({
     } catch(error) {
       console.log(error)
     }
+    setIsLoading(false);
     setInput({message: ''});
   }
 
@@ -101,6 +106,7 @@ export default function NewMessageForm({
 
         </textarea>
         <button 
+          disabled={isLoading}
           type="submit"
         >
           <LuSendHorizonal />

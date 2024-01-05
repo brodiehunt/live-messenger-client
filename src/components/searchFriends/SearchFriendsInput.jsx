@@ -42,15 +42,10 @@ export default function SearchFriendsInput({
   const [isLoading, setIsLoading] = useState(null);
   const [users, setUsers] = useState(null);
 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
   useEffect(() => {
     // make api call
     const getUsersFromDb = async () => {
       setIsLoading(true);
-      await timeout(3000);
       try {
         const response = await findUsers(debouncedVal);
         const users = response.data.data;

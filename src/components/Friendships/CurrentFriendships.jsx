@@ -100,14 +100,9 @@ export default function CurrentFriendships() {
   const navigate = useNavigate();
   const { store, dispatch } = useContext(AppContext);
 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
   useEffect(() => {
     const fetchFriends = async () => {
       try {
-        await timeout(3000);
         const friends = await getFriends();
         // Sort friends
         const friendsHash = createAlphabetizedArr(friends);

@@ -27,18 +27,13 @@ export default function Conversation() {
   const [settingsModal, setSettingsModal] = useState(false);
 
   const user = store.user;
-  // const conversations = store.conversations;
   const conversationId = params.conversationId;
- 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
+
 
   useEffect(() => {
     const fetchConversation = async () => {
       try {
         setIsLoading(true);
-        await timeout(3000);
         const fetchedConversation = await getConversation(conversationId);
         setConversation(fetchedConversation);
         // Update conversations list... 

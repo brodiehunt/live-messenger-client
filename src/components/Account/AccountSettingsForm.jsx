@@ -16,10 +16,6 @@ export default function AccountSettingsForm() {
   const [isLoading, setIsLoading] = useState(false);
   const { activateToast, ToastComponent } = useToast();
 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
   const handleChange = (event) => {
 
     const {name, checked} = event.target;
@@ -32,7 +28,6 @@ export default function AccountSettingsForm() {
     event.preventDefault();
     setIsLoading(true)
     try {
-      await timeout(3000)
       const response = await updateSettings(formState);
       const updatedUser = response.data.data;
       dispatch({

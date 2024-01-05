@@ -13,15 +13,11 @@ export default function PeopleYouMayKnow({
   const [isLoading, setIsLoading] = useState(false);
   const visibleFriends = mutualFriends.slice(0, 6);
 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
 
   useEffect(() => {
     const fetchMutualFriends = async () => {
       try {
         setIsLoading(true);
-        await timeout(3000)
         const potentialFriends = await getLikelyFriends();
         setMutualFriends(potentialFriends);
       } catch(error) {

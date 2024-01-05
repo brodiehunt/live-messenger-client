@@ -12,13 +12,8 @@ export default function MutualFriendModal({
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
   useEffect(() => {
     const fetchMutualFriends = async () => {
-      await timeout(3000);
       try {
         setIsLoading(true);
         const friends = await getMutualFriends(userId);

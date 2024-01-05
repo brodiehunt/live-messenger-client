@@ -23,16 +23,11 @@ export default function ConversationsList({user}) {
   const {store, dispatch} = useContext(AppContext);
   const socket = useContext(SocketContext);
   const cachedConversations = store.conversations;
-  
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
         setIsLoading(true)
-        await timeout(3000);
         const conversationList = await getConversations();
         // setConversations(conversationList);
         dispatch({

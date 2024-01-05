@@ -97,16 +97,11 @@ export default function SearchContacts({addRecipient}) {
   const [error, setError] = useState(null);
   const [contacts, setContacts] = useState([]);
 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
   useEffect(() => {
     // make api call
     const getUsersFromDb = async () => {
       setIsLoading(true);
       try {
-        await timeout(3000);
         const matchedFriends = await findFriendsByUsername(debouncedVal);
         setContacts(matchedFriends)
       } catch(error) {

@@ -30,10 +30,6 @@ export default function AccountDetailsForm({
     setInputError({ [name]: validateFunc(value) });
   }
 
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
-
   async function handleSubmit(event) {
     event.preventDefault();
     setServerError(null);
@@ -45,7 +41,6 @@ export default function AccountDetailsForm({
     setIsLoading(true);
     // Make api call with updated data
     try {
-      await timeout(3000);
       const response = await apiFunc(input);
       console.log('user' , response)
       let updatedUser = response.data.data;

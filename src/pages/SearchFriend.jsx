@@ -24,10 +24,8 @@ export default function SearchFriend() {
   const [isLoading, setIsLoading] = useState(true);
   const [mutualFriendModal, setMutualFriendModal] = useState(null);
   const { activateToast, ToastComponent } = useToast()
-  console.log('sent requests', sentRequests);
-  const timeout = (ms) => {
-    return new Promise(resolve => setTimeout(resolve, ms))
-  }
+ 
+  
 
   useEffect(() => {
     if (socket) {
@@ -61,7 +59,6 @@ export default function SearchFriend() {
   useEffect(() => {
     const getRequest = async () => {
       setIsLoading(true);
-      await timeout(3000);
       try {
         const [recieved, sent] = await Promise.all([
           getRecievedRequests(),
