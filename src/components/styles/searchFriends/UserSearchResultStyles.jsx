@@ -6,13 +6,11 @@ const UserSearchResultStyles = styled.div`
   align-items: center;
   gap: 1rem;
   padding: 1rem;
-  /* cursor: pointer; */
 
   &:hover {
     background-color: rgba(143, 226, 249, 0.1);
   }
   .avatar-container {
-    
     img {
       width: 35px;
       height: 35px;
@@ -31,7 +29,7 @@ const UserSearchResultStyles = styled.div`
     justify-content: center;
     align-items: center;
     gap: 1rem;
-  } 
+  }
 
   button {
     background-color: none;
@@ -42,7 +40,6 @@ const UserSearchResultStyles = styled.div`
   }
 
   button:hover {
-
   }
 
   .button-icon {
@@ -50,7 +47,6 @@ const UserSearchResultStyles = styled.div`
     height: 20px;
     color: var(--primary);
   }
-
 `;
 
 export default UserSearchResultStyles;

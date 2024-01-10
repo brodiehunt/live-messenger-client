@@ -1,22 +1,21 @@
-import api from '../config/api';
+import api from "../config/api";
 
 export const registerUserLocal = async (formData) => {
-  const response = await api.post('/auth/register', formData);
+  const response = await api.post("/auth/register", formData);
   return response;
-}
+};
 
 export const signInUserLocal = async (formData) => {
-  const response = await api.post('/auth/signin', formData);
+  const response = await api.post("/auth/signin", formData);
   return response;
-}
+};
 
 export const requestReset = async (formData) => {
-  const response = await api.post('/auth/request-reset', formData);
+  const response = await api.post("/auth/request-reset", formData);
   return response;
-}
+};
 
 export const passwordReset = async (formData) => {
-  const response = await api.post('/auth/password-reset', formData);
+  const response = await api.post("/auth/password-reset", formData);
   return response;
-}
-
+};

@@ -1,4 +1,4 @@
-import styled from 'styled-components'; 
+import styled from "styled-components";
 
 const ToggleSwitchStyles = styled.div`
   position: relative;
@@ -11,7 +11,6 @@ const ToggleSwitchStyles = styled.div`
   margin-bottom: 2rem;
 
   .switch-label {
-    /* flex-grow: 1; */
     max-width: 600px;
   }
 
@@ -41,8 +40,8 @@ const ToggleSwitchStyles = styled.div`
     width: 60px;
     height: 32px;
     background-color: #ccc;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
     border-radius: 34px;
   }
 
@@ -54,8 +53,8 @@ const ToggleSwitchStyles = styled.div`
     left: 3px;
     bottom: 3px;
     background-color: white;
-    -webkit-transition: .4s;
-    transition: .4s;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
     border-radius: 50%;
   }
 

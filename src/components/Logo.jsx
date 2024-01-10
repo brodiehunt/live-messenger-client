@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const LogoStyles = styled.div`
   padding-top: 3rem;
@@ -35,7 +35,6 @@ const LogoStyles = styled.div`
 `;
 
 const Logo = () => {
-
   return (
     <Link to="/">
       <LogoStyles className="logo-container">
@@ -44,7 +43,7 @@ const Logo = () => {
         Chatter
       </LogoStyles>
     </Link>
-  )
-}
+  );
+};
 
 export default Logo;

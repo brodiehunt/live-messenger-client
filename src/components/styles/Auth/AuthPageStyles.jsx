@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const AuthPageStyles = styled.div`
   min-height: 100svh;

@@ -12,23 +12,12 @@ const buttonHover = keyframes`
 const loading = keyframes`
   from {
     background-position: 0 0;
-    /* rotate: 0; */
   }
 
   to {
     background-position: 100% 100%;
-    /* rotate: 360deg; */
   }
 `;
-
-// const loading = keyframes`
-//   0%, 100% {
-//     left: 0
-//   }
-//   50% {
-//     left: 80%;
-//   }
-// `
 
 const AccountDetailsFormStyles = styled.form`
   display: flex;
@@ -40,7 +29,7 @@ const AccountDetailsFormStyles = styled.form`
   max-width: 700px;
   .form-group {
     width: 100%;
-  };
+  }
 
   label {
     display: block;
@@ -78,11 +67,11 @@ const AccountDetailsFormStyles = styled.form`
     width: 100%;
     position: relative;
     background-image: linear-gradient(
-        to right,
-        var(--secondary-hover) 0%,
-        var(--primary-hover) 50%,
-        var(--secondary-hover) 100%
-      );
+      to right,
+      var(--secondary-hover) 0%,
+      var(--primary-hover) 50%,
+      var(--secondary-hover) 100%
+    );
     background-size: 50% auto;
     animation: ${loading} 0.5s linear infinite;
   }
@@ -91,7 +80,6 @@ const AccountDetailsFormStyles = styled.form`
     font-size: 0.8rem;
     color: var(--error-red);
     margin-top: 0.2rem;
-
   }
 
   button {
@@ -103,7 +91,7 @@ const AccountDetailsFormStyles = styled.form`
     margin-bottom: 0.2rem;
     transition: 0.2s ease-in all;
     position: absolute;
-    right: 1rem;;
+    right: 1rem;
     top: 2.1rem;
     .button-icon {
       width: 25px;
@@ -119,10 +107,9 @@ const AccountDetailsFormStyles = styled.form`
   }
 
   button:focus {
-    outline: 1px solid var(--primary);  
-    box-shadow: 0px 2px 10px rgba(77, 150, 169, 0.4);    
+    outline: 1px solid var(--primary);
+    box-shadow: 0px 2px 10px rgba(77, 150, 169, 0.4);
   }
-
-`
+`;
 
 export default AccountDetailsFormStyles;

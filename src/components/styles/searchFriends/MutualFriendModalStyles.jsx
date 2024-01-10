@@ -14,11 +14,11 @@ const MutualFriendModalStyles = styled.div`
   border-radius: 1rem;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
   overflow-y: scroll;
-  
+
   &&::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
-  
+
   .header {
     display: flex;
     align-items: center;

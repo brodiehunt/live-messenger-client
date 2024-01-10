@@ -1,10 +1,8 @@
-import { Outlet } from 'react-router-dom';
-import { StateProvider } from './hooks/StateContext.jsx';
-import GlobalStyles from './components/styles/Global.js';
-
+import { Outlet } from "react-router-dom";
+import { StateProvider } from "./hooks/StateContext.jsx";
+import GlobalStyles from "./components/styles/Global.js";
 
 function App() {
-  
   return (
     <div>
       <GlobalStyles />
@@ -12,7 +10,7 @@ function App() {
         <Outlet />
       </StateProvider>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

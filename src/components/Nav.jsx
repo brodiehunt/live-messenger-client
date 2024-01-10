@@ -1,11 +1,11 @@
-import styled, {keyframes} from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { keyframes } from "styled-components";
+import { Link } from "react-router-dom";
 import { TiMessages } from "react-icons/ti";
 import { BiMessageAdd } from "react-icons/bi";
 import { FaRegUser } from "react-icons/fa";
 import { FaUserPlus } from "react-icons/fa";
-import { useContext, useState, useEffect } from 'react';
-import AppContext from '../hooks/StateContext';
+import { useContext } from "react";
+import AppContext from "../hooks/StateContext";
 
 const buttonHover = keyframes`
   0%, 100% {
@@ -17,12 +17,9 @@ const buttonHover = keyframes`
 `;
 
 const NavStyles = styled.nav`
-  
-  
-  display: flex; 
+  display: flex;
   justify-content: space-around;
   align-items: center;
-  
 
   a {
     padding: 1rem;
@@ -50,8 +47,7 @@ const NavStyles = styled.nav`
     }
   }
 
-  a:hover { 
-
+  a:hover {
     svg {
       color: var(--primary-hover);
       scale: 1.1;
@@ -60,34 +56,26 @@ const NavStyles = styled.nav`
   }
 `;
 
-export default function Nav({user}) {
-  const {store} = useContext(AppContext);
-  
+export default function Nav({ user }) {
+  const { store } = useContext(AppContext);
+
   return (
     <NavStyles>
-         <Link to={`/${user._id}`}
-          
-         >
-          <TiMessages />
-         </Link>
-         <Link to={`/${user._id}/conversation/new`}
-          
-         >
-         <BiMessageAdd />
-         </Link>
-         <Link to={`/${user._id}/friends`}
-          
-         >
-         <FaRegUser />
-         </Link>
-         <Link to={`/${user._id}/search-friends`}
-          
-         >
-         <FaUserPlus />
-        {store.newRequests.count > 0 &&
-          <div className='notification'>{store.newRequests.count}</div> 
-        }
-         </Link>
-      </NavStyles>
-  )
+      <Link to={`/${user._id}`}>
+        <TiMessages />
+      </Link>
+      <Link to={`/${user._id}/conversation/new`}>
+        <BiMessageAdd />
+      </Link>
+      <Link to={`/${user._id}/friends`}>
+        <FaRegUser />
+      </Link>
+      <Link to={`/${user._id}/search-friends`}>
+        <FaUserPlus />
+        {store.newRequests.count > 0 && (
+          <div className="notification">{store.newRequests.count}</div>
+        )}
+      </Link>
+    </NavStyles>
+  );
 }

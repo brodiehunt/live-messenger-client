@@ -4,11 +4,11 @@ export default function useDebounce(value, delay = 500) {
 
   useEffect(() => {
     const timeout = setTimeout(() => {
-      setDebounceVal(value)
+      setDebounceVal(value);
     }, delay);
 
-    return () => clearTimeout(timeout)
-  }, [value])
+    return () => clearTimeout(timeout);
+  }, [value]);
 
   return debounceVal;
 }

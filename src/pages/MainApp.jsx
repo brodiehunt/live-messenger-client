@@ -1,14 +1,14 @@
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
-import styled from 'styled-components';
-import { useContext, useEffect } from 'react';
-import useWindowSize from '../hooks/UseWindowSize';
-import { getAccount } from '../services/accountServices';
-import AppContext from '../hooks/StateContext';
-import Conversations from './Conversations';
-import SocketContext, { SocketProvider } from '../hooks/socket';
-import { useToast } from '../hooks/useToast';
-import 'react-loading-skeleton/dist/skeleton.css';
-import { SkeletonTheme } from 'react-loading-skeleton';
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import styled from "styled-components";
+import { useContext, useEffect } from "react";
+import useWindowSize from "../hooks/UseWindowSize";
+import { getAccount } from "../services/accountServices";
+import AppContext from "../hooks/StateContext";
+import Conversations from "./Conversations";
+import SocketContext, { SocketProvider } from "../hooks/socket";
+import { useToast } from "../hooks/useToast";
+import "react-loading-skeleton/dist/skeleton.css";
+import { SkeletonTheme } from "react-loading-skeleton";
 
 const MainWrapper = styled.div`
   max-width: 1400px;
@@ -20,10 +20,9 @@ const MainWrapper = styled.div`
     min-height: 100svh;
   }
   @media (min-width: 768px) {
-
     display: flex;
     width: 100%;
-   
+
     .outlet-container {
       flex-grow: 1;
       padding-top: 0;
@@ -38,17 +37,16 @@ const MainWrapper = styled.div`
   }
 `;
 
-
 export default function MainApp() {
   const [height, width] = useWindowSize();
   const location = useLocation();
   const navigate = useNavigate();
-  const pathSegments = location.pathname.split('/').filter(Boolean);
+  const pathSegments = location.pathname.split("/").filter(Boolean);
   const isHomePage = pathSegments.length === 1;
-  const {store, dispatch} = useContext(AppContext);
+  const { store, dispatch } = useContext(AppContext);
   const socket = useContext(SocketContext);
   const user = store.user;
-  const {ToastComponent, activateToast} = useToast();
+  const { ToastComponent, activateToast } = useToast();
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -56,89 +54,94 @@ export default function MainApp() {
         const response = await getAccount();
         const retrievedUser = response.data.data;
         if (!retrievedUser) {
-          navigate('/signin');
+          navigate("/signin");
         }
 
         dispatch({
-          type: 'setUser',
-          data: retrievedUser
-        })
+          type: "setUser",
+          data: retrievedUser,
+        });
         dispatch({
-          type: 'setRequests',
-          data: {count: retrievedUser.newRequests}
-        })
-        
-      } catch(error) {
+          type: "setRequests",
+          data: { count: retrievedUser.newRequests },
+        });
+      } catch (error) {
         if (error.response) {
-          navigate('/signin');
+          navigate("/signin");
         }
-        console.log(error)
+        console.log(error);
       }
-      
-    }
+    };
 
     if (user) {
-      return
-    } 
-    
+      return;
+    }
+
     fetchUser();
-  }, [])
+  }, []);
 
   useEffect(() => {
-  
     if (socket) {
-      socket.on('newRequest', (friendship) => {
+      socket.on("newRequest", (friendship) => {
         if (friendship) {
-          const requestsState = {...store.newRequests}
+          const requestsState = { ...store.newRequests };
           requestsState.count = requestsState.count + 1;
           dispatch({
-            type: 'setRequests',
-            data: requestsState
-          })
-          activateToast(`New friend request.`, `${friendship.userDetails.username} sent you a request`, 'success')
+            type: "setRequests",
+            data: requestsState,
+          });
+          activateToast(
+            `New friend request.`,
+            `${friendship.userDetails.username} sent you a request`,
+            "success"
+          );
         }
       });
 
-      socket.on('requestAccepted', (friendship) => {
-        console.log('event fired');
+      socket.on("requestAccepted", (friendship) => {
+        console.log("event fired");
         if (friendship) {
           const otherUser = friendship.users.find((userObj) => {
-            return userObj._id !== user._id
-          })
-          activateToast('Friendship Accepted', `${otherUser.username} accepted your friend request`, 'success');
+            return userObj._id !== user._id;
+          });
+          activateToast(
+            "Friendship Accepted",
+            `${otherUser.username} accepted your friend request`,
+            "success"
+          );
         }
-      })
+      });
 
       return () => {
-        socket.off('newRequest');
-        socket.off('requestAccepted');
-      }
+        socket.off("newRequest");
+        socket.off("requestAccepted");
+      };
     }
-  }, [socket])
+  }, [socket]);
 
-  if (!user) return <div></div>
+  if (!user) return <div></div>;
 
   return (
     <SkeletonTheme baseColor="#c2cfd6" highlightColor="#f0f3f5">
       <MainWrapper className="main-app">
         <ToastComponent />
-        {
-        (width <= 768) ? 
-          
-          isHomePage ?
+        {width <= 768 ? (
+          isHomePage ? (
             <Conversations user={user} />
-          : <div className="outlet-container">
+          ) : (
+            <div className="outlet-container">
               <Outlet />
             </div>
-          : <>
-              <Conversations user={user} />
-              <div className="outlet-container">
-                <Outlet />
-              </div>
-            
-            </>
-      }
+          )
+        ) : (
+          <>
+            <Conversations user={user} />
+            <div className="outlet-container">
+              <Outlet />
+            </div>
+          </>
+        )}
       </MainWrapper>
     </SkeletonTheme>
-  )
+  );
 }

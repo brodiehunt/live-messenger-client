@@ -1,10 +1,9 @@
 import styled from "styled-components";
 import { IoSearch } from "react-icons/io5";
 const SearchBarStyles = styled.form`
-
   position: relative;
   padding: 1rem;
-  /* border-bottom: 1px solid var(--text-light); */
+
   input {
     color: var(--text-dark);
     width: 100%;
@@ -28,10 +27,8 @@ const SearchBarStyles = styled.form`
     top: 50%;
     transform: translateY(-50%);
     left: 1.5rem;
-
   }
 `;
-
 
 export default function SearchBar({
   handleChange,
@@ -39,13 +36,12 @@ export default function SearchBar({
   name,
   placeholder,
   value,
-  label
+  label,
 }) {
-
   return (
     <SearchBarStyles>
       <input
-        type='text'
+        type="text"
         name={name}
         id={name}
         value={value}
@@ -55,8 +51,7 @@ export default function SearchBar({
         aria-label={label}
         autoComplete="off"
       />
-      <IoSearch className="search-icon"/>
+      <IoSearch className="search-icon" />
     </SearchBarStyles>
-  )
-
+  );
 }

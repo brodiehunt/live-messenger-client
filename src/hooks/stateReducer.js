@@ -1,31 +1,31 @@
 export default function stateReducer(state, action) {
-  switch(action.type) {
+  switch (action.type) {
     case "setUser": {
       return {
         ...state,
         user: action.data,
-      }
+      };
     }
-    case 'setRequests': {
+    case "setRequests": {
       return {
         ...state,
-        newRequests: action.data
-      }
+        newRequests: action.data,
+      };
     }
-    case 'setConversations': {
+    case "setConversations": {
       return {
         ...state,
-        conversations: action.data
-      }
+        conversations: action.data,
+      };
     }
-    case 'addConversation': {
+    case "addConversation": {
       const newConversations = [...state.conversations, action.data];
       return {
         ...state,
-        conversations: newConversations
-      }
+        conversations: newConversations,
+      };
     }
-    default: 
-    return state;
+    default:
+      return state;
   }
 }

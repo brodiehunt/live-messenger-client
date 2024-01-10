@@ -1,13 +1,13 @@
-import {createContext, useReducer} from 'react';
-import stateReducer from './stateReducer';
+import { createContext, useReducer } from "react";
+import stateReducer from "./stateReducer";
 
 const AppContext = createContext();
 
-export const StateProvider = ({children}) => {
+export const StateProvider = ({ children }) => {
   const initialState = {
     user: null,
     newRequests: {
-      count: 0
+      count: 0,
     },
     conversations: null,
   };
@@ -15,11 +15,10 @@ export const StateProvider = ({children}) => {
   const [store, dispatch] = useReducer(stateReducer, initialState);
 
   return (
-    <AppContext.Provider value={{store, dispatch}}>
+    <AppContext.Provider value={{ store, dispatch }}>
       {children}
     </AppContext.Provider>
-  )
-
-}
+  );
+};
 
 export default AppContext;

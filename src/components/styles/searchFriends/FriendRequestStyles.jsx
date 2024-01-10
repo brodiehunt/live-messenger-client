@@ -27,7 +27,7 @@ const FriendRequestsStyles = styled.div`
     border-bottom: 4px solid var(--primary);
   }
 
-  .toggle-button:hover{
+  .toggle-button:hover {
     background-color: white;
   }
 
@@ -44,8 +44,8 @@ const FriendRequestsStyles = styled.div`
   }
 
   .requests-container::-webkit-scrollbar {
-      display: none;
-    }
+    display: none;
+  }
 `;
 
 export default FriendRequestsStyles;

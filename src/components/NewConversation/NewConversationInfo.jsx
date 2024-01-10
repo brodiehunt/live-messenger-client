@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import {ButtonStyles} from '../FormButton';
+import { ButtonStyles } from "../FormButton";
 import { IoClose } from "react-icons/io5";
 
 const NewConversationInfoStyles = styled.div`
@@ -53,39 +53,30 @@ export default function NewConversationInfo({
   recipients,
   deleteRecipient,
   isLoading,
-  handleCreateConversation
+  handleCreateConversation,
 }) {
-
   return (
     <NewConversationInfoStyles>
       <div className="recipients-container">
-        <span>Recipients:</span> 
-        {recipients && 
+        <span>Recipients:</span>
+        {recipients &&
           recipients.map((user) => {
             return (
-              <div 
-                key={user._id}
-                className="recipient-item"
-              >
+              <div key={user._id} className="recipient-item">
                 {user.username}
-                <button 
+                <button
                   onClick={() => deleteRecipient(user._id)}
                   className="delete-recipient"
                 >
-                    <IoClose />
+                  <IoClose />
                 </button>
               </div>
-            )
-          })
-        }
+            );
+          })}
       </div>
-      <ButtonStyles
-        disabled={isLoading}
-        onClick={handleCreateConversation}
-      >
+      <ButtonStyles disabled={isLoading} onClick={handleCreateConversation}>
         CreateConversation
       </ButtonStyles>
     </NewConversationInfoStyles>
-  )
+  );
 }
-

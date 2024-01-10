@@ -3,12 +3,12 @@ import styled from "styled-components";
 const HeroStyles = styled.section`
   max-width: 1440px;
   margin: 0 auto;
-  
+
   .img-center {
     width: 100%;
     margin-bottom: 3rem;
   }
-  .img-left, 
+  .img-left,
   .img-right {
     display: none;
   }
@@ -61,10 +61,10 @@ const HeroStyles = styled.section`
       background-color: var(--primary-hover);
       box-shadow: 0 4px 8px 0 rgba(77, 150, 169, 0.4);
       outline: none;
-    } 
+    }
 
     .link-primary:focus {
-      outline: 2px solid var(--primary)
+      outline: 2px solid var(--primary);
     }
 
     .link-secondary {
@@ -75,10 +75,10 @@ const HeroStyles = styled.section`
     .link-secondary:focus {
       background-color: var(--secondary-hover);
       outline: none;
-    } 
+    }
 
     .link-secondary:focus {
-      outline: 2px solid var(--secondary)
+      outline: 2px solid var(--secondary);
     }
   }
 
@@ -105,7 +105,6 @@ const HeroStyles = styled.section`
   }
 
   @media (min-width: 1024px) {
-
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     width: 100%;
@@ -116,7 +115,7 @@ const HeroStyles = styled.section`
       display: none;
     }
 
-    .img-left, 
+    .img-left,
     .img-right {
       display: block;
       max-width: 100%;

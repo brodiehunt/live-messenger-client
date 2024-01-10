@@ -40,39 +40,29 @@ const FriendItemStyles = styled.div`
 
   button:hover,
   button:focus {
-
     svg {
       color: var(--primary-hover);
     }
   }
-  
 `;
-
 
 export default function FriendItem({
   friend,
   handleDeleteFriend,
-  handleNewMessage
+  handleNewMessage,
 }) {
-
   return (
     <FriendItemStyles>
       <img src={friend.avatarUrl} />
-      <div className="username">
-        {friend.username}
-      </div>
+      <div className="username">{friend.username}</div>
       <div className="button-group">
-        <button 
-          onClick={() => handleNewMessage(friend._id, friend.username)}
-        >
+        <button onClick={() => handleNewMessage(friend._id, friend.username)}>
           <BiMessageRounded />
         </button>
-        <button 
-          onClick={() => handleDeleteFriend(friend._id, friend.username)}
-        >
+        <button onClick={() => handleDeleteFriend(friend._id, friend.username)}>
           <TiUserDelete />
         </button>
       </div>
     </FriendItemStyles>
-  )
+  );
 }

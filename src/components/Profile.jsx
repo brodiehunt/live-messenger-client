@@ -1,5 +1,5 @@
-import styled, {keyframes} from 'styled-components';
-import { Link } from 'react-router-dom';
+import styled, { keyframes } from "styled-components";
+import { Link } from "react-router-dom";
 import { IoSettingsOutline } from "react-icons/io5";
 
 const buttonHover = keyframes`
@@ -44,26 +44,25 @@ const ProfileStyles = styled.div`
       color: var(--primary-hover);
     }
   }
- 
+
   svg {
-    width: 25px;  
+    width: 25px;
     height: 25px;
     color: var(--primary);
     border-radius: 50%;
   }
 `;
 
-
-export default function Profile({user}) {
+export default function Profile({ user }) {
   return (
     <ProfileStyles>
       <div className="user-avatar-container">
-        <img src={user.avatarUrl} alt={`${user.username} avatar`}/>
+        <img src={user.avatarUrl} alt={`${user.username} avatar`} />
       </div>
       <div className="username">Hello, {user.username}</div>
-      <Link to={`/${user._id}/account`}>      
+      <Link to={`/${user._id}/account`}>
         <IoSettingsOutline />
       </Link>
     </ProfileStyles>
-  )
+  );
 }

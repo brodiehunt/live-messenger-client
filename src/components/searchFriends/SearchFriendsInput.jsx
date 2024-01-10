@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import SearchBar from '../SearchBar';
-import useDebounce from '../../hooks/useDebounce';
-import { findUsers } from '../../services/friendServices';
-import UserResultsContainer from '../styles/searchFriends/UserResultsContainer';
-import UserSearchResult from './UserSearchResult';
-import styled, { keyframes } from 'styled-components';
+import { useState, useEffect } from "react";
+import SearchBar from "../SearchBar";
+import useDebounce from "../../hooks/useDebounce";
+import { findUsers } from "../../services/friendServices";
+import UserResultsContainer from "../styles/searchFriends/UserResultsContainer";
+import UserSearchResult from "./UserSearchResult";
+import styled, { keyframes } from "styled-components";
 
 const loading = keyframes`
   from {
@@ -23,21 +23,20 @@ const LoadingBar = styled.div`
   position: relative;
   margin: 0 1rem;
   background-image: linear-gradient(
-      to right,
-      var(--secondary-hover) 0%,
-      var(--primary-hover) 50%,
-      var(--secondary-hover) 100%
-    );
+    to right,
+    var(--secondary-hover) 0%,
+    var(--primary-hover) 50%,
+    var(--secondary-hover) 100%
+  );
   background-size: 50% auto;
   animation: ${loading} 0.5s linear infinite;
-  
-`
+`;
 
 export default function SearchFriendsInput({
   activateToast,
-  addNewSentFriendship
+  addNewSentFriendship,
 }) {
-  const [search, setSearch] = useState('');
+  const [search, setSearch] = useState("");
   const debouncedVal = useDebounce(search);
   const [isLoading, setIsLoading] = useState(null);
   const [users, setUsers] = useState(null);
@@ -50,35 +49,33 @@ export default function SearchFriendsInput({
         const response = await findUsers(debouncedVal);
         const users = response.data.data;
         setUsers(users);
-      } catch(error) {
+      } catch (error) {
         if (error.response) {
-          console.log(error)
+          console.log(error);
         } else if (error.request) {
           console.log(error);
         } else {
-          console.log('Throw to error page');
+          console.log("Throw to error page");
         }
       }
       setIsLoading(false);
-    }
-    if (debouncedVal !== '') {
+    };
+    if (debouncedVal !== "") {
       getUsersFromDb();
     } else {
       setUsers(null);
     }
-    
-    
-  }, [debouncedVal])
+  }, [debouncedVal]);
 
   function handleBlur() {
     setTimeout(() => {
       setUsers(null);
-    }, 200)
+    }, 200);
   }
 
   return (
     <div>
-      <SearchBar 
+      <SearchBar
         handleChange={setSearch}
         name="searchFriends"
         placeholder="Search for friends"
@@ -86,33 +83,31 @@ export default function SearchFriendsInput({
         label="Search for friends"
         handleBlur={handleBlur}
       />
-      {isLoading && 
-        <LoadingBar 
+      {isLoading && (
+        <LoadingBar
           className="progress-loading"
           aria-hidden="true"
-        >
-        </LoadingBar>
-      }
+        ></LoadingBar>
+      )}
       <UserResultsContainer>
         {users &&
-        (
-          users.length > 0 ? 
-          <div>
-            {users.map((user) => {
-              return (
-                <UserSearchResult 
-                  key={user._id} 
-                  user={user}
-                  activateToast={activateToast}
-                  addNewSentFriendship={addNewSentFriendship}
-                />
-              )
-            })}
-          </div> :
-          <div>No users match</div>
-        )  
-        }
+          (users.length > 0 ? (
+            <div>
+              {users.map((user) => {
+                return (
+                  <UserSearchResult
+                    key={user._id}
+                    user={user}
+                    activateToast={activateToast}
+                    addNewSentFriendship={addNewSentFriendship}
+                  />
+                );
+              })}
+            </div>
+          ) : (
+            <div>No users match</div>
+          ))}
       </UserResultsContainer>
     </div>
-  )
+  );
 }

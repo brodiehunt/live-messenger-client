@@ -1,7 +1,6 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 const InputFieldStyles = styled.div`
-  
   margin-bottom: 1.5rem;
   label {
     display: block;
@@ -23,7 +22,7 @@ const InputFieldStyles = styled.div`
   input.error {
     border: 1px solid var(--error-red);
   }
-  
+
   input::placeholder {
     color: var(--text-light);
   }
@@ -36,7 +35,6 @@ const InputFieldStyles = styled.div`
     font-size: 0.8rem;
     color: var(--error-red);
     margin-top: 0.2rem;
-
   }
 `;
 
@@ -51,17 +49,13 @@ const InputField = ({
   errorMessage,
   placeholder,
   children,
-  disabled
+  disabled,
 }) => {
   return (
     <InputFieldStyles>
-      <label 
-        htmlFor={id}
-      >
-        *{children}
-      </label>
-      <input 
-        className={errorMessage && 'error'}
+      <label htmlFor={id}>*{children}</label>
+      <input
+        className={errorMessage && "error"}
         type={type}
         name={name}
         id={id}
@@ -72,17 +66,13 @@ const InputField = ({
         onBlur={onBlur}
         disabled={disabled}
       />
-      {errorMessage && 
-        <div
-          role="alert"
-          aria-live="assertive"
-          className="error-message"
-        >
+      {errorMessage && (
+        <div role="alert" aria-live="assertive" className="error-message">
           {errorMessage}
         </div>
-      }
+      )}
     </InputFieldStyles>
-  )
-}
+  );
+};
 
 export default InputField;

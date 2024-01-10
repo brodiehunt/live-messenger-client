@@ -18,12 +18,12 @@ const ImgGridStyles = styled.section`
     border-radius: 1rem;
     max-width: 100%;
   }
-  
+
   .statement {
     color: var(--primary);
     font-size: 1rem;
     font-weight: 900;
-    line-height: 1.625rem; /* 162.5% */
+    line-height: 1.625rem;
     letter-spacing: 0.25rem;
     text-transform: uppercase;
     margin-bottom: 1.5rem;
@@ -40,7 +40,7 @@ const ImgGridStyles = styled.section`
   p {
     color: var(--text-light);
     font-weight: 500;
-    line-height: 1.625rem;  
+    line-height: 1.625rem;
   }
 
   @media (min-width: 768px) {

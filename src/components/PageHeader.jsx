@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import styled from 'styled-components';
+import { Link } from "react-router-dom";
+import styled from "styled-components";
 import { IoIosArrowBack } from "react-icons/io";
 
 const PageHeaderStyles = styled.div`
@@ -29,7 +29,6 @@ const PageHeaderStyles = styled.div`
   }
 
   @media (min-width: 768px) {
-    
     a {
       display: none;
     }
@@ -38,18 +37,15 @@ const PageHeaderStyles = styled.div`
       font-size: 2rem;
       margin-left: 2rem;
     }
-
   }
-
-`
-export default function PageHeader({pageTitle, user}) {
-
+`;
+export default function PageHeader({ pageTitle, user }) {
   return (
     <PageHeaderStyles>
       <Link to={`/${user._id}`}>
-        <IoIosArrowBack className="back-arrow"/>
+        <IoIosArrowBack className="back-arrow" />
       </Link>
       <h1>{pageTitle}</h1>
     </PageHeaderStyles>
-  )
+  );
 }

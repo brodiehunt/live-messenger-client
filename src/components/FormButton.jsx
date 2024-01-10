@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const ButtonStyles = styled.button`
   font-size: 1rem;
@@ -23,13 +23,10 @@ export const ButtonStyles = styled.button`
   }
 `;
 
-export default function FormButton({disabled, children}) {
+export default function FormButton({ disabled, children }) {
   return (
-    <ButtonStyles
-      type="submit"
-      disabled={disabled}
-    >
+    <ButtonStyles type="submit" disabled={disabled}>
       {children}
     </ButtonStyles>
-  )
+  );
 }

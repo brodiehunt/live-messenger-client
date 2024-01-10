@@ -3,7 +3,6 @@ import styled from "styled-components";
 const MutualFriendItemStyles = styled.div`
   display: flex;
   align-items: center;
-  /* gap: 2rem; */
   width: 100%;
 
   .avatar-container {
@@ -40,7 +39,7 @@ const MutualFriendItemStyles = styled.div`
     transition: 0.2s ease-in all;
   }
 
-  button.mutual-friends:hover, 
+  button.mutual-friends:hover,
   button.mutual-friends:focus,
   button.add-user:hover,
   button.add-user:focus {
@@ -49,9 +48,8 @@ const MutualFriendItemStyles = styled.div`
 
   .add-icon {
     width: 20px;
-    height: 20px
+    height: 20px;
   }
-  
 `;
 
 export default MutualFriendItemStyles;

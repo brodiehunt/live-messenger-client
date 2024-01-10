@@ -1,4 +1,4 @@
-import { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from "styled-components";
 
 const GlobalStyles = createGlobalStyle`
     
@@ -20,9 +20,7 @@ const GlobalStyles = createGlobalStyle`
         --text-light: #87879d;
         --background-light: #fafafa;
         --error-red: rgba(255, 0, 0, 0.8);
-        --success-green: rgba(0, 255, 0, 0.8);
-        
-        
+        --success-green: rgba(0, 255, 0, 0.8);  
     }
 
     h1, h2, h3, h4 {

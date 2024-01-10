@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const UserResultsContainer = styled.div`
-  /* padding: 1rem 0; */
   margin: 0 1rem;
   max-height: 400px;
   overflow-y: scroll;
@@ -9,9 +8,8 @@ const UserResultsContainer = styled.div`
   background-color: white;
   border-radius: 0.5rem;
   &::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
-
 `;
 
 export default UserResultsContainer;
