@@ -13,8 +13,8 @@ import { SkeletonTheme } from "react-loading-skeleton";
 const MainWrapper = styled.div`
   max-width: 1400px;
   margin: 0 auto;
-  /* background-color: var(--background-light); */
   max-height: 100vh;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05);
   .outlet-container {
     position: relative;
     min-height: 100svh;
