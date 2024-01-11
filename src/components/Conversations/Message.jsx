@@ -2,17 +2,25 @@ import { useContext } from "react";
 import moment from "moment";
 import styled from "styled-components";
 import AppContext from "../../hooks/StateContext";
+import { RiErrorWarningLine } from "react-icons/ri";
+import { useState } from "react";
+import { sendMessage } from "../../services/conversationServices";
 
 const MessageStyles = styled.div`
   align-self: ${({ $isUserMessage }) => ($isUserMessage ? "end" : "start")};
   margin: 0.5rem 0;
   max-width: 60%;
+  position: relative;
 
   .message-content {
-    background-color: ${({ $isUserMessage }) =>
-      $isUserMessage ? "var(--primary)" : "#E5E5EA"};
-    color: ${({ $isUserMessage }) =>
-      $isUserMessage ? "white" : "var(--text-dark)"};
+    background-color: ${({ $isUserMessage, $pending }) =>
+      $isUserMessage ? ($pending ? "#E5E5EA" : "var(--primary)") : "#E5E5EA"};
+    color: ${({ $isUserMessage, $pending }) =>
+      $isUserMessage
+        ? $pending === "error"
+          ? "var(--text-dark)"
+          : "white"
+        : "var(--text-dark)"};
     padding: 0.5rem 1rem;
     border-radius: 1rem;
     position: relative;
@@ -33,8 +41,12 @@ const MessageStyles = styled.div`
     height: 10px;
     border-left: 10px solid transparent;
     border-right: 10px solid transparent;
-    border-bottom: ${({ $isUserMessage }) =>
-      $isUserMessage ? "10px solid var(--primary)" : "10px solid #E5E5EA"};
+    border-bottom: ${({ $isUserMessage, $pending }) =>
+      $isUserMessage
+        ? $pending
+          ? "10px solid #E5E5EA"
+          : "10px solid var(--primary)"
+        : "10px solid #E5E5EA"};
     /* border-bottom: 10px solid var(--primary); */
     border-radius: 4px;
   }
@@ -44,14 +56,38 @@ const MessageStyles = styled.div`
     font-weight: 600;
     font-size: 0.7rem;
   }
+
+  .error-button {
+    border: none;
+    background: none;
+    position: absolute;
+    left: 0;
+    top: 0;
+    transform: translate(-150%, 50%);
+  }
+
+  .error-icon {
+    color: var(--error-red);
+  }
 `;
 
-export default function Message({ message }) {
-  const { store } = useContext(AppContext);
+export default function Message({
+  message,
+  updateOptimisticMessageError,
+  replaceOptimisticMessage,
+  conversationId,
+}) {
+  const { store, dispatch } = useContext(AppContext);
+  const [resendLoading, setResendLoading] = useState(false);
   const user = store.user;
 
-  const isUserMessage = message.sender === user._id ? true : false;
+  const timeout = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
 
+  const isUserMessage = message.sender === user._id ? true : false;
+  const pending = message?.status;
+  console.log(pending);
   const formatDate = (dateString) => {
     const msgDate = new Date(dateString);
     const now = new Date();
@@ -79,10 +115,54 @@ export default function Message({ message }) {
         .padStart(2, "0")}/${msgDate.getFullYear().toString().substring(2)}`;
     }
   };
+
+  const resendMessage = async () => {
+    try {
+      setResendLoading(true);
+      updateOptimisticMessageError(message._id);
+      await timeout(3000);
+
+      // Send message to api returns with conversation (where lastMessage) is the full new message object
+      const conversation = await sendMessage(conversationId, {
+        message: message.content,
+      });
+
+      // Filter this conversation out of context
+      const filterConvo = [...store.conversations].filter((conv) => {
+        return conv._id !== conversation._id;
+      });
+      // Re-append (so it appears first);
+      const newConversations = [conversation, ...filterConvo];
+      // Set context
+      dispatch({
+        type: "setConversations",
+        data: newConversations,
+      });
+
+      const newMessage = conversation.lastMessage;
+      // Replace optimistic message with the real one
+      replaceOptimisticMessage(newMessage, message._id);
+    } catch (error) {
+      updateOptimisticMessageError(message._id);
+    }
+    setResendLoading(false);
+  };
+
   return (
-    <MessageStyles $isUserMessage={isUserMessage}>
+    <MessageStyles $isUserMessage={isUserMessage} $pending={pending}>
+      {pending === "error" && (
+        <button
+          className="error-button"
+          aria-label="resend message"
+          type="button"
+          onClick={resendMessage}
+          disabled={resendLoading}
+        >
+          <RiErrorWarningLine className="error-icon" />
+        </button>
+      )}
       <div className="message-content">{message.content}</div>
-      <div className="date">{formatDate(message.createdAt)}</div>
+      <div className="date">{formatDate(message?.createdAt || Date.now())}</div>
     </MessageStyles>
   );
 }

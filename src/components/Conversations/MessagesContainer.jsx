@@ -17,7 +17,13 @@ const MessageContainerStyles = styled.div`
   }
 `;
 
-export default function MessageContainer({ messages, isLoading }) {
+export default function MessageContainer({
+  messages,
+  isLoading,
+  updateOptimisticMessageError,
+  replaceOptimisticMessage,
+  conversationId,
+}) {
   const messageContainerRef = useRef(null);
 
   useEffect(() => {
@@ -41,6 +47,9 @@ export default function MessageContainer({ messages, isLoading }) {
             <Message
               key={array[array.length - 1 - index]._id}
               message={array[array.length - 1 - index]}
+              updateOptimisticMessageError={updateOptimisticMessageError}
+              replaceOptimisticMessage={replaceOptimisticMessage}
+              conversationId={conversationId}
             />
           );
         })

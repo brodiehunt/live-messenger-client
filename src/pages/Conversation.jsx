@@ -114,6 +114,7 @@ export default function Conversation() {
       };
 
       const handleReadNotification = (updatedConv) => {
+        console.log("Read notification is responsible");
         if (updatedConv._id === conversationId) {
           setConversation((currentConversation) => {
             if (currentConversation) {
@@ -137,9 +138,56 @@ export default function Conversation() {
   }, [socket, conversationId, store.conversations]);
 
   function addNewMessage(message) {
-    setConversation({
-      ...conversation,
-      messages: [...conversation.messages, message],
+    console.log("whats the message", message);
+    console.log("whats the conversation", conversation);
+    setConversation((prevConversation) => {
+      return {
+        ...prevConversation,
+        messages: [...prevConversation.messages, message],
+      };
+    });
+  }
+
+  function replaceOptimisticMessage(newMessage, optMessageId) {
+    setConversation((prevConversation) => {
+      // Clone messages
+      const messagesCopy = [...prevConversation.messages];
+
+      // Filter out optimistic message
+      const optMessageReplace = messagesCopy.map((message) => {
+        if (message._id === optMessageId) {
+          return newMessage;
+        }
+        return message;
+      });
+
+      return {
+        ...prevConversation,
+        messages: optMessageReplace,
+      };
+    });
+  }
+
+  function updateOptimisticMessageError(optMessageId) {
+    setConversation((prevConversation) => {
+      // Clone messages
+      const messagesCopy = [...prevConversation.messages];
+
+      // Filter out optimistic message
+      const optMessageUpdate = messagesCopy.map((message) => {
+        if (message._id === optMessageId) {
+          return {
+            ...message,
+            status: message.status === "error" ? "pending" : "error",
+          };
+        }
+        return message;
+      });
+
+      return {
+        ...prevConversation,
+        messages: optMessageUpdate,
+      };
     });
   }
 
@@ -165,6 +213,9 @@ export default function Conversation() {
       <MessageContainer
         isLoading={isLoading}
         messages={conversation?.messages}
+        updateOptimisticMessageError={updateOptimisticMessageError}
+        replaceOptimisticMessage={replaceOptimisticMessage}
+        conversationId={conversationId}
       />
       {!isLoading && (
         <ReadByContainer
@@ -176,6 +227,8 @@ export default function Conversation() {
       <NewMessageForm
         addNewMessage={addNewMessage}
         conversationId={conversationId}
+        replaceOptimisticMessage={replaceOptimisticMessage}
+        updateOptimisticMessageError={updateOptimisticMessageError}
       />
     </ConversationStyles>
   );

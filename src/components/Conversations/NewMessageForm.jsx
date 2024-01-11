@@ -3,6 +3,7 @@ import { LuSendHorizonal } from "react-icons/lu";
 import { useContext, useState } from "react";
 import { sendMessage } from "../../services/conversationServices";
 import AppContext from "../../hooks/StateContext";
+import { v4 as uuidv4 } from "uuid";
 const NewMessageFormStyles = styled.div`
   margin-top: auto;
   background-color: white;
@@ -47,11 +48,19 @@ const NewMessageFormStyles = styled.div`
   }
 `;
 
-export default function NewMessageForm({ addNewMessage, conversationId }) {
+export default function NewMessageForm({
+  addNewMessage,
+  conversationId,
+  replaceOptimisticMessage,
+  updateOptimisticMessageError,
+}) {
   const [input, setInput] = useState({ message: "" });
   const [isLoading, setIsLoading] = useState(false);
   const { store, dispatch } = useContext(AppContext);
 
+  const timeout = (ms) => {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  };
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -63,24 +72,47 @@ export default function NewMessageForm({ addNewMessage, conversationId }) {
     if (!input.message) {
       return;
     }
+    // Optimistic message id. Defined here because needed in catch block
+    const optimisticId = uuidv4();
     try {
-      // Also update conversation list state here
       setIsLoading(true);
-      const conversation = await sendMessage(conversationId, input);
+
+      // Construct optimistic message
+      const optimisticMessage = {
+        _id: optimisticId,
+        content: input.message,
+        sender: store.user._id,
+        createdAt: Date.now(),
+        status: "pending",
+      };
+
+      // Append to the dom
+      addNewMessage(optimisticMessage);
+      const copyInput = { ...input };
+      setInput({ message: "" });
+      await timeout(3000);
+      // Send message to api returns with conversation (where lastMessage) is the full new message object
+      const conversation = await sendMessage(conversationId, copyInput);
+
+      // Filter this conversation out of context
       const filterConvo = [...store.conversations].filter((conv) => {
         return conv._id !== conversation._id;
       });
+      // Re-append (so it appears first);
       const newConversations = [conversation, ...filterConvo];
-
+      // Set context
       dispatch({
         type: "setConversations",
         data: newConversations,
       });
 
       const newMessage = conversation.lastMessage;
-      addNewMessage(newMessage);
+      // Replace optimistic message with the real one
+      replaceOptimisticMessage(newMessage, optimisticId);
     } catch (error) {
       console.log(error);
+      // Find an update the optimistic message in the ui.
+      updateOptimisticMessageError(optimisticId);
     }
     setIsLoading(false);
     setInput({ message: "" });
