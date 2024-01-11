@@ -59,6 +59,10 @@ const RegisterForm = () => {
         type: "setUser",
         data: user,
       });
+      dispatch({
+        type: "setRequests",
+        data: { count: user.newRequests },
+      });
       return navigate(`/${user._id}/account`);
     } catch (error) {
       if (error.response) {

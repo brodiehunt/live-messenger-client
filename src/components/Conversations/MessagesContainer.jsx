@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import Message from "./Message";
 import MessagesSkeleton from "../Skeleton/MessagesSkeleton";
+import { useRef, useEffect } from "react";
 
 const MessageContainerStyles = styled.div`
   padding: 0 1rem;
@@ -12,43 +13,40 @@ const MessageContainerStyles = styled.div`
   scrollbar-width: none;
   background-color: var(--background-light);
   &::-webkit-scrollbar {
-      display: none;
-    }
+    display: none;
+  }
 `;
 
-export default function MessageContainer({messages, isLoading}) {
-  // reverse map instead!
-  // const sortedMessages = messages.sort((a, b) => {
-  //   const dateA = new Date(a.createdAt);
-  //   const dateB = new Date(b.createdAt);
+export default function MessageContainer({ messages, isLoading }) {
+  const messageContainerRef = useRef(null);
 
-  //   if (dateA > dateB) {
-  //     return -1
-  //   }
-  //   return 1;
-  // })
+  useEffect(() => {
+    const scrollToBottom = () => {
+      if (messageContainerRef.current) {
+        messageContainerRef.current.scrollTop =
+          messageContainerRef.current.scrollHeight;
+      }
+    };
+
+    scrollToBottom();
+  }, [isLoading]);
 
   return (
-    <MessageContainerStyles>
+    <MessageContainerStyles ref={messageContainerRef}>
       {isLoading ? (
         <MessagesSkeleton count={10} />
+      ) : messages && messages.length > 0 ? (
+        messages.map((message, index, array) => {
+          return (
+            <Message
+              key={array[array.length - 1 - index]._id}
+              message={array[array.length - 1 - index]}
+            />
+          );
+        })
       ) : (
-        messages && messages.length > 0 ?
-        (
-          messages.map((message, index, array) => {
-            return (
-              <Message 
-                key={array[array.length - 1 - index]._id}
-                message={array[array.length - 1 - index]}
-              />
-            )
-          })
-        ) : (
-          <div>No messages yet</div>
-        )
-      )
-      
-      }
+        <div>No messages yet</div>
+      )}
     </MessageContainerStyles>
-  )
+  );
 }

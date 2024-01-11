@@ -1,5 +1,5 @@
-import styled from "styled-components"
-import { useState, useEffect, useContext } from 'react';
+import styled from "styled-components";
+import { useState, useEffect, useContext } from "react";
 import { getConversations } from "../../services/conversationServices";
 import ConversationListItem from "./ConversationListItem";
 import AppContext from "../../hooks/StateContext";
@@ -15,37 +15,36 @@ const ConversationListStyles = styled.div`
   /* flex-grow: 1; */
   /* height: 400px; */
   overflow-y: scroll;
-`
+`;
 
-export default function ConversationsList({user}) {
+export default function ConversationsList({ user }) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const {store, dispatch} = useContext(AppContext);
+  const { store, dispatch } = useContext(AppContext);
   const socket = useContext(SocketContext);
   const cachedConversations = store.conversations;
 
   useEffect(() => {
     const fetchConversations = async () => {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         const conversationList = await getConversations();
         // setConversations(conversationList);
         dispatch({
-          type: 'setConversations',
-          data: conversationList
-        })
-      } catch(error) {
-        console.log('error', error);
-        setError('Error getting conversations');
+          type: "setConversations",
+          data: conversationList,
+        });
+      } catch (error) {
+        console.log("error", error);
+        setError("Error getting conversations");
       }
       setIsLoading(false);
-    }
+    };
 
-    if (!cachedConversations) {
-      fetchConversations(); 
-    } 
-    
-  }, [])
+    // if (!cachedConversations) {
+    fetchConversations();
+    // }
+  }, []);
 
   useEffect(() => {
     if (socket) {
@@ -53,47 +52,38 @@ export default function ConversationsList({user}) {
         if (store.conversations) {
           const filterConvo = [...store.conversations].filter((conv) => {
             return conv._id !== conversation._id;
-          })
-          
-          const newConversations = [conversation, ...filterConvo]
-          dispatch({
-            type: 'setConversations',
-            data: newConversations
-          })
-        }
-      }
+          });
 
-      socket.on('newMessage', handleConversationsUpdate);
+          const newConversations = [conversation, ...filterConvo];
+          dispatch({
+            type: "setConversations",
+            data: newConversations,
+          });
+        }
+      };
+
+      socket.on("newMessage", handleConversationsUpdate);
 
       return () => {
-        socket.off('newMessage', handleConversationsUpdate);
-      }
+        socket.off("newMessage", handleConversationsUpdate);
+      };
     }
-  }, [socket, store.conversations])
+  }, [socket, store.conversations]);
 
   if (error) {
-    return <div>Error {error}</div>
+    return <div>Error {error}</div>;
   }
   return (
     <ConversationListStyles>
       {isLoading ? (
         <ConversationListSkeleton count={13} />
+      ) : cachedConversations && cachedConversations.length > 0 ? (
+        cachedConversations.map((conv) => {
+          return <ConversationListItem conversation={conv} key={conv._id} />;
+        })
       ) : (
-        cachedConversations && cachedConversations.length > 0 ?
-        (
-          cachedConversations.map((conv) => {
-            return (
-              <ConversationListItem 
-                conversation={conv} 
-                key={conv._id}
-              />
-            )
-          })
-        ) : (
-          <div>No Conversations yet</div>
-        )
-      )
-      }
+        <div>No Conversations yet</div>
+      )}
     </ConversationListStyles>
-  )
+  );
 }
