@@ -1,7 +1,7 @@
 # Real time Messaging Application
 
-Date: 17-12-2023
-Prepared by: Brodie Hunt
+Date: 17-12-2023 \
+Prepared by: Brodie Hunt \
 This is the client repository for the Chatter application. \
 The server repository can be found here: [Server Repo](https://github.com/brodiehunt/live-messenger-server)
 
