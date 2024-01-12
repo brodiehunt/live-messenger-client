@@ -10,8 +10,8 @@ export default function Register() {
   // Redirect auth page onClick
   useScroll();
   const google = () => {
-    const baseUrl = import.meta.env.VITE_SERVER_URL;
-    window.open(`${baseUrl}/auth/google`, "_self");
+    const baseUrl = import.meta.env.VITE_SERVER_URL_PROD;
+    window.open(`${baseUrl}auth/google`, "_self");
   };
 
   return (

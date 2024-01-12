@@ -13,6 +13,12 @@ export default function AuthCallbackPage() {
       ? JSON.parse(decodeURIComponent(query.get("user")))
       : null;
 
+    const jwt = query.get("jwt"); // Get the JWT from the query parameters
+
+    if (jwt) {
+      sessionStorage.setItem("jwt", jwt);
+    }
+
     if (user) {
       dispatch({
         type: "setUser",
