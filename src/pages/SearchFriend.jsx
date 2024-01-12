@@ -127,7 +127,7 @@ export default function SearchFriend() {
   };
 
   return (
-    <>
+    <div style={{ height: "100svh" }}>
       <ToastComponent />
       {mutualFriendModal && (
         <MutualFriendModal
@@ -152,6 +152,6 @@ export default function SearchFriend() {
         activateToast={activateToast}
         setMutualFriendModal={setMutualFriendModal}
       />
-    </>
+    </div>
   );
 }

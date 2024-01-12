@@ -10,7 +10,7 @@ import AppContext from "../hooks/StateContext";
 import FilteredConversationList from "../components/Conversations/FilteredConversationList";
 
 const ConversationsStyles = styled.div`
-  height: 100vh;
+  height: 100svh;
   background-color: white;
   display: flex;
   flex-direction: column;

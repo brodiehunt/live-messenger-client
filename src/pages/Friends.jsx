@@ -8,9 +8,9 @@ export default function Friends() {
   const user = store.user;
 
   return (
-    <>
+    <div style={{ height: "100svh" }}>
       <PageHeader user={user} pageTitle="Friendships" />
       <CurrentFriendships />
-    </>
+    </div>
   );
 }

@@ -9,10 +9,10 @@ export default function Account() {
   const user = store.user;
 
   return (
-    <>
+    <div style={{ height: "100svh" }}>
       <PageHeader user={user} pageTitle="Your Account" />
       <AccountDetails user={user} />
       <AccountSettings />
-    </>
+    </div>
   );
 }
