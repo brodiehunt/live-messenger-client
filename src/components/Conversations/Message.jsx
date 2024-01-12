@@ -1,5 +1,4 @@
 import { useContext } from "react";
-import moment from "moment";
 import styled from "styled-components";
 import AppContext from "../../hooks/StateContext";
 import { RiErrorWarningLine } from "react-icons/ri";
@@ -81,14 +80,11 @@ export default function Message({
   const [resendLoading, setResendLoading] = useState(false);
   const user = store.user;
 
-  const timeout = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
-
   const isUserMessage = message.sender === user._id ? true : false;
   const pending = message?.status;
-  console.log(pending);
+
   const formatDate = (dateString) => {
+    console.log(dateString);
     const msgDate = new Date(dateString);
     const now = new Date();
     const yesterday = new Date(now);
@@ -120,28 +116,30 @@ export default function Message({
     try {
       setResendLoading(true);
       updateOptimisticMessageError(message._id);
-      await timeout(3000);
 
       // Send message to api returns with conversation (where lastMessage) is the full new message object
       const conversation = await sendMessage(conversationId, {
         message: message.content,
       });
 
-      // Filter this conversation out of context
-      const filterConvo = [...store.conversations].filter((conv) => {
-        return conv._id !== conversation._id;
-      });
-      // Re-append (so it appears first);
-      const newConversations = [conversation, ...filterConvo];
-      // Set context
-      dispatch({
-        type: "setConversations",
-        data: newConversations,
-      });
+      if (store.conversations) {
+        // Filter this conversation out of context
+        const filterConvo = [...store.conversations].filter((conv) => {
+          return conv._id !== conversation._id;
+        });
+        // Re-append (so it appears first);
+        const newConversations = [conversation, ...filterConvo];
+        // Set context
+        dispatch({
+          type: "setConversations",
+          data: newConversations,
+        });
+      }
 
       const newMessage = conversation.lastMessage;
+      const updatedReadBy = conversation.readBy;
       // Replace optimistic message with the real one
-      replaceOptimisticMessage(newMessage, message._id);
+      replaceOptimisticMessage(newMessage, updatedReadBy, message._id);
     } catch (error) {
       updateOptimisticMessageError(message._id);
     }

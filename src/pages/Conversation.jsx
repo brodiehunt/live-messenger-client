@@ -148,7 +148,7 @@ export default function Conversation() {
     });
   }
 
-  function replaceOptimisticMessage(newMessage, optMessageId) {
+  function replaceOptimisticMessage(newMessage, updatedReadBy, optMessageId) {
     setConversation((prevConversation) => {
       // Clone messages
       const messagesCopy = [...prevConversation.messages];
@@ -164,6 +164,7 @@ export default function Conversation() {
       return {
         ...prevConversation,
         messages: optMessageReplace,
+        readBy: updatedReadBy,
       };
     });
   }

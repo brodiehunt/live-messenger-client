@@ -18,6 +18,10 @@ const MainWrapper = styled.div`
   .outlet-container {
     position: relative;
     min-height: 100svh;
+    max-height: 100vh;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    padding-bottom: 2rem;
   }
   @media (min-width: 768px) {
     display: flex;
@@ -26,9 +30,6 @@ const MainWrapper = styled.div`
     .outlet-container {
       flex-grow: 1;
       padding-top: 0;
-      max-height: 100vh;
-      overflow-y: scroll;
-      scrollbar-width: none;
     }
 
     .outlet-container::-webkit-scrollbar {

@@ -58,9 +58,6 @@ export default function NewMessageForm({
   const [isLoading, setIsLoading] = useState(false);
   const { store, dispatch } = useContext(AppContext);
 
-  const timeout = (ms) => {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  };
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -78,6 +75,7 @@ export default function NewMessageForm({
       setIsLoading(true);
 
       // Construct optimistic message
+
       const optimisticMessage = {
         _id: optimisticId,
         content: input.message,
@@ -85,30 +83,34 @@ export default function NewMessageForm({
         createdAt: Date.now(),
         status: "pending",
       };
-
+      console.log(optimisticMessage.createdAt);
       // Append to the dom
       addNewMessage(optimisticMessage);
       const copyInput = { ...input };
       setInput({ message: "" });
-      await timeout(3000);
       // Send message to api returns with conversation (where lastMessage) is the full new message object
       const conversation = await sendMessage(conversationId, copyInput);
 
       // Filter this conversation out of context
-      const filterConvo = [...store.conversations].filter((conv) => {
-        return conv._id !== conversation._id;
-      });
-      // Re-append (so it appears first);
-      const newConversations = [conversation, ...filterConvo];
-      // Set context
-      dispatch({
-        type: "setConversations",
-        data: newConversations,
-      });
+      if (store.conversations) {
+        const filterConvo = [...store.conversations].filter((conv) => {
+          return conv._id !== conversation._id;
+        });
+        // Re-append (so it appears first);
+        const newConversations = [conversation, ...filterConvo];
 
+        // Set context
+        dispatch({
+          type: "setConversations",
+          data: newConversations,
+        });
+      }
+
+      console.log(conversation.lastMessage);
       const newMessage = conversation.lastMessage;
+      const updatedReadBy = conversation.readBy;
       // Replace optimistic message with the real one
-      replaceOptimisticMessage(newMessage, optimisticId);
+      replaceOptimisticMessage(newMessage, updatedReadBy, optimisticId);
     } catch (error) {
       console.log(error);
       // Find an update the optimistic message in the ui.
