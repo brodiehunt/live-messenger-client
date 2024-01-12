@@ -3,8 +3,10 @@ import Logo from "../components/Logo";
 import ResetRequestForm from "../components/Auth/ResetRequestForm";
 import AuthPageStyles from "../components/styles/Auth/AuthPageStyles";
 import Footer from "../components/Footer";
+import useScroll from "../hooks/useScroll";
 
 export default function RequestReset() {
+  useScroll();
   return (
     <AuthPageStyles>
       <Logo />

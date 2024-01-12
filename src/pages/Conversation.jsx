@@ -15,7 +15,7 @@ import SocketContext from "../hooks/socket";
 import ReadByContainer from "../components/Conversations/ReadByContainer";
 
 const ConversationStyles = styled.div`
-  height: 100vh;
+  height: 100svh;
   display: flex;
   flex-direction: column;
   position: relative;

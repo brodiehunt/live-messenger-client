@@ -4,8 +4,10 @@ import SignInForm from "../components/Auth/SignInForm";
 import Footer from "../components/Footer";
 import AuthPageStyles from "../components/styles/Auth/AuthPageStyles";
 import GoogleButton from "react-google-button";
+import useScroll from "../hooks/useScroll";
 
 export default function Signin() {
+  useScroll();
   const google = () => {
     const baseUrl = import.meta.env.VITE_SERVER_URL;
     window.open(`${baseUrl}/auth/google`, "_self");

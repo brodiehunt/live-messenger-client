@@ -9,6 +9,7 @@ import SocketContext, { SocketProvider } from "../hooks/socket";
 import { useToast } from "../hooks/useToast";
 import "react-loading-skeleton/dist/skeleton.css";
 import { SkeletonTheme } from "react-loading-skeleton";
+import useScroll from "../hooks/useScroll";
 
 const MainWrapper = styled.div`
   max-width: 1400px;
@@ -21,7 +22,7 @@ const MainWrapper = styled.div`
     max-height: 100vh;
     overflow-y: scroll;
     scrollbar-width: none;
-    padding-bottom: 2rem;
+    /* padding-bottom: 2rem; */
   }
   @media (min-width: 768px) {
     display: flex;
@@ -39,6 +40,7 @@ const MainWrapper = styled.div`
 `;
 
 export default function MainApp() {
+  useScroll();
   const [height, width] = useWindowSize();
   const location = useLocation();
   const navigate = useNavigate();

@@ -10,8 +10,10 @@ import HeroStyles from "../components/styles/Homepage/HeroStyles";
 import ImgGridStyles from "../components/styles/Homepage/ImgGridStyles";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import useScroll from "../hooks/useScroll";
 
 export default function Home() {
+  useScroll();
   return (
     <div>
       <header>
