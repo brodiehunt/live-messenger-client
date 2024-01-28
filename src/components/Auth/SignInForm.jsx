@@ -57,6 +57,11 @@ const SignInForm = () => {
         }
       } else if (error.request) {
         setServerErrors(error.message);
+        if (error.code === "ECONNABORTED") {
+          alert(
+            "Request has timed out. This is because heroku server spins down after 30 minutes of inactivity. Try again now, and you should be able to log in."
+          );
+        }
       } else {
         console.log("Some whack error i havent considered", error);
       }

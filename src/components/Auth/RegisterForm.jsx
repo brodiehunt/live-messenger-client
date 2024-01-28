@@ -76,6 +76,12 @@ const RegisterForm = () => {
       } else if (error.request) {
         // network errors - no response from server
         setServerErrors(`${error.message}. Try again later`);
+
+        if (error.code === "ECONNABORTED") {
+          alert(
+            "Request has timed out. This is because heroku server spins down after 30 minutes of inactivity. Try again now, and you should be able to log in."
+          );
+        }
       } else {
         // Something else happened (on the client ? go to error page) - redirect to error page.
         console.log("something random", error);

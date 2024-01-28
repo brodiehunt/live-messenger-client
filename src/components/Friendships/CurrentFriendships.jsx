@@ -156,7 +156,7 @@ export default function CurrentFriendships() {
       // further filterin
       const arrayOfFriends = [...friendships[firstLetter]];
       const matchingFriends = arrayOfFriends.filter((friend) => {
-        const searchValCopy = searchVal;
+        const searchValCopy = searchVal.toLowerCase();
         const friendUsername = friend.username.toLowerCase();
 
         return friendUsername.match(searchValCopy);
