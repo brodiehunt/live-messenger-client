@@ -16,7 +16,7 @@ export default function AccountDetailsForm({
   const [serverError, setServerError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const fieldRef = useRef(null);
-  const { dispatch } = useContext(AppContext);
+  const { store, dispatch } = useContext(AppContext);
   const { activateToast, ToastComponent } = useToast();
 
   function handleChange(event) {
@@ -31,6 +31,15 @@ export default function AccountDetailsForm({
 
   async function handleSubmit(event) {
     event.preventDefault();
+    if (store.user.email === "brodie@test.com") {
+      activateToast(
+        "Can not proceed with this.",
+        "Changing the email field will break the login button",
+        "error"
+      );
+      setInput({ [name]: initialValue });
+      return;
+    }
     setServerError(null);
     const isInputError = validateFunc(input[name]);
     if (isInputError) {

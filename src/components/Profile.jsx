@@ -22,6 +22,8 @@ const ProfileStyles = styled.div`
     margin-right: auto;
     font-weight: 600;
     font-size: 1.2rem;
+    overflow-x: hidden;
+    width: 70%;
   }
 
   .user-avatar-container {
@@ -29,7 +31,8 @@ const ProfileStyles = styled.div`
     height: 40px;
 
     img {
-      width: 100%;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
       border: 2px solid var(--secondary);
     }
