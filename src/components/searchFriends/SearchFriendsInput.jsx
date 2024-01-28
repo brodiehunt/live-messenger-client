@@ -48,6 +48,7 @@ export default function SearchFriendsInput({
       try {
         const response = await findUsers(debouncedVal);
         const users = response.data.data;
+        console.log(users);
         setUsers(users);
       } catch (error) {
         if (error.response) {
